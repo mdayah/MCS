@@ -1,0 +1,7 @@
+TYPE Index
+   Ven AS STRING * 3
+   Ddt AS STRING * 6
+   Mrk AS STRING * 1
+   Inv AS INTEGER
+END TYPE
+
