@@ -1,0 +1,5 @@
+TYPE Expenses
+     Amt AS STRING * 8
+     Det AS STRING * 26
+     END TYPE
+

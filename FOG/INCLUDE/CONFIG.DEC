@@ -1,0 +1,209 @@
+DECLARE FUNCTION FJulian$ (J&)
+DECLARE FUNCTION TJulian& (d$)
+DECLARE FUNCTION DayWeek$ (d$)
+DECLARE FUNCTION DateDif& (d$, t$)
+DECLARE FUNCTION DayMath$ (d$, d%)
+DECLARE FUNCTION MonMath$ (d$, d%)
+
+DECLARE FUNCTION FindPas (f$)
+DECLARE FUNCTION FindIni (f$)
+DECLARE FUNCTION FindSer (f$)
+DECLARE FUNCTION FindCod (f$)
+DECLARE FUNCTION FindCmb (f$)
+DECLARE FUNCTION FindPrc (f$)
+DECLARE FUNCTION FindAgr (f$)
+DECLARE FUNCTION FindCus (f$)
+DECLARE FUNCTION FindZip (f$)
+
+DECLARE FUNCTION WinItem (c%, i%)
+DECLARE FUNCTION WinCust (f$)
+DECLARE FUNCTION WinRate ()
+DECLARE FUNCTION WinAgrt ()
+DECLARE FUNCTION WinComb ()
+DECLARE FUNCTION WinRcts ()
+DECLARE FUNCTION WinCntr ()
+DECLARE FUNCTION WinStor ()
+DECLARE FUNCTION WinPric ()
+DECLARE FUNCTION WinZipC ()
+
+DECLARE FUNCTION PassWord (f$)
+DECLARE FUNCTION Response (f$)
+DECLARE FUNCTION TraStat$ (f$)
+DECLARE FUNCTION TraType$ ()
+DECLARE FUNCTION Confirm (g%, f$)
+
+DECLARE SUB CusEdit (f$)
+DECLARE SUB OpenFiles ()
+
+DECLARE SUB Statlin (f$)
+DECLARE SUB KeyPres (f$)
+DECLARE SUB FindGrp (f$)
+DECLARE SUB WinMssg (f$)
+
+DECLARE SUB Picture (r, c, s, f$)
+DECLARE SUB EntryX (r, c, e, b, f$)
+DECLARE SUB EntryT (r, c, e, b, f$)
+DECLARE SUB EntryD (r, c, e, b, f$)
+DECLARE SUB EntryU (r, c, s, e, b, f$)
+DECLARE SUB EntryS (r, c, s, e, b, f$)
+DECLARE SUB EntryN (r, c, s, d, e, b, f$)
+
+DECLARE FUNCTION PrinterReady% (BYVAL r%)
+DECLARE SUB Scroll (r%, c%, t%, b%, l%)
+DECLARE SUB BkScroll (r%, c%, t%, b%, l%)
+DECLARE SUB PrtSc (BYVAL e%)
+DECLARE SUB qPrint (s$, BYVAL r%, BYVAL c%, BYVAL p%, BYVAL f%)
+'DECLARE SUB ClockSet (BYVAL t%, BYVAL s%, BYVAL f%, BYVAL r%, BYVAL c%, BYVAL a%, BYVAL q%)
+'DECLARE SUB Clock (BYVAL s%)
+
+REM $INCLUDE: '..\Include\Codes.REC'
+REM $INCLUDE: '..\Include\Combos.REC'
+REM $INCLUDE: '..\Include\Prices.REC'
+REM $INCLUDE: '..\Include\Rates.REC'
+REM $INCLUDE: '..\Include\PassWord.REC'
+REM $INCLUDE: '..\Include\Stores.REC'
+REM $INCLUDE: '..\Include\Centers.REC'
+REM $INCLUDE: '..\Include\Transfer.REC'
+REM $INCLUDE: '..\Include\Transact.REC'
+REM $INCLUDE: '..\Include\Expenses.Rec'
+REM $INCLUDE: '..\Include\Activity.REC'
+REM $INCLUDE: '..\Include\Inventor.Rec'
+REM $INCLUDE: '..\Include\Customer.Rec'
+REM $INCLUDE: '..\Include\Agreemnt.Rec'
+REM $INCLUDE: '..\Include\Receipts.Rec'
+REM $INCLUDE: '..\Include\ZipCodes.Rec'
+
+'enable handeling 35 DOS files
+'----------------------------------
+ TYPE RegType
+     ax    AS INTEGER
+     bx    AS INTEGER
+     cx    AS INTEGER
+     dx    AS INTEGER
+     bp    AS INTEGER
+     si    AS INTEGER
+     di    AS INTEGER
+     flags AS INTEGER
+ END TYPE
+
+ DIM IR  AS RegType
+ DIM OU  AS RegType
+
+   'master files variables
+   '----------------------
+    COMMON SHARED Cod      AS Codes      '01
+    COMMON SHARED Cmb      AS Combos     '02
+    COMMON SHARED Prc      AS Prices     '03
+    COMMON SHARED Rat      AS Rates      '04
+    COMMON SHARED Pas      AS PassWord   '05
+    COMMON SHARED Sto      AS Stores     '06
+    COMMON SHARED Ctr      AS Centers    '07
+    COMMON SHARED Trf      AS Transfer   '08
+    COMMON SHARED Tra      AS Transaction'09
+    COMMON SHARED Pet      AS Expenses   '28
+    COMMON SHARED Act      AS Activity   '22
+    COMMON SHARED Zip      AS ZipCodes   '27
+
+    COMMON SHARED Inv      AS Inventory  '10
+    COMMON SHARED Inx      AS InvIndex   '11
+    COMMON SHARED Inl      AS InvLine    '12
+                                         '
+    COMMON SHARED Cus      AS Customer   '13
+    COMMON SHARED Cnx      AS CusIndex   '14
+    COMMON SHARED Cul      AS CusLine    '15
+                                         '
+    COMMON SHARED Agr      AS Agreement  '16
+    COMMON SHARED Agx      AS AgrIndex   '17
+    COMMON SHARED Agl      AS AgrLine    '18
+                                         '
+    COMMON SHARED Rct      AS Receipts   '19
+    COMMON SHARED Rcx      AS RctIndex   '20
+    COMMON SHARED Rcl      AS RctLine    '21
+
+   'array variables
+   '---------------
+    DIM Status(15)         AS STRING * 12
+    DIM Ndm(12)            AS INTEGER
+    DIM Ser(4)             AS STRING * 10'Serial number
+    DIM Lon(4)             AS STRING * 10'Loaner serial
+    DIM Old(4)             AS STRING * 10'Old loaner
+    DIM Cob(4)             AS STRING * 2 'Combo codes
+    DIM Cst(4)             AS LONG       'Item's price
+    DIM Mkt(4)             AS LONG       'Fair marker value
+    DIM Dis(4)             AS LONG       'Revenue distribution
+    DIM Trm(4)             AS INTEGER    'Terms reduction
+
+    DIM SHARED Rats(2, 3)  AS INTEGER
+
+    COMMON SHARED Ser()    AS STRING * 10
+    COMMON SHARED Lon()    AS STRING * 10
+    COMMON SHARED Old()    AS STRING * 10
+    COMMON SHARED Cob()    AS STRING * 2
+    COMMON SHARED Cst()    AS LONG
+    COMMON SHARED Mkt()    AS LONG
+    COMMON SHARED Dis()    AS LONG
+    COMMON SHARED Ndm()    AS INTEGER
+    COMMON SHARED Trm()    AS INTEGER
+    COMMON SHARED Rats()   AS INTEGER
+    COMMON SHARED Status() AS STRING * 12
+    
+   'configuration master variables
+   '------------------------------
+    COMMON SHARED StoNum   AS STRING * 2
+    COMMON SHARED AgrNum   AS LONG
+    COMMON SHARED RctNum   AS LONG
+    COMMON SHARED RptDay   AS STRING * 3
+    COMMON SHARED EndBak   AS STRING * 10
+    COMMON SHARED EndDay   AS STRING * 10
+    COMMON SHARED EndWek   AS STRING * 10
+    COMMON SHARED EndMon   AS STRING * 10
+    COMMON SHARED EndYer   AS STRING * 10
+
+   'common variables
+   '----------------
+    COMMON SHARED LineNum  AS INTEGER
+    COMMON SHARED PageNum  AS INTEGER
+    COMMON SHARED SortA    AS INTEGER
+    COMMON SHARED SortR    AS INTEGER
+    COMMON SHARED Laser    AS INTEGER
+    COMMON SHARED Setup    AS INTEGER
+    COMMON SHARED Yes      AS INTEGER
+
+   'load inventory status descriptions
+   '----------------------------------
+    Status(0) = "Idle        "
+    Status(1) = "In-Service  "
+   
+    Status(2) = "On-Rent     "
+    Status(3) = "On-Rent/AS  " 'awaiting service
+    Status(4) = "On-Rent/IS  " 'in service
+    Status(5) = "On-Rent/AR  " 'awaiting return
+    Status(6) = "On-Rent/IC  " 'insurance claim
+    Status(7) = "On-Rent/L   " 'legal
+   
+    Status(8) = "Loaner      "
+    Status(9) = "Cash-Sale   "
+   Status(10) = "Paid-Out    "
+    
+   Status(11) = "Charge-Off  " 'skip or stolen
+   Status(12) = "Charge-Off/L" 'legal
+   Status(13) = "Charge-Off/S" 'scrap
+   Status(14) = "Charge-Off/G" 'giveaway
+   Status(15) = "Transferred " 'transferred
+   
+   'define constant variables
+   '---------------------------------
+    CONST DaysAvg = 30.43685
+    Ndm(1) = 31
+    Ndm(2) = 28
+    Ndm(3) = 31
+    Ndm(4) = 30
+    Ndm(5) = 31
+    Ndm(6) = 30
+    Ndm(7) = 31
+    Ndm(8) = 31
+    Ndm(9) = 30
+    Ndm(10) = 31
+    Ndm(11) = 30
+    Ndm(12) = 31
+
