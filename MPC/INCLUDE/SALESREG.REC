@@ -1,0 +1,14 @@
+TYPE SalesReg
+     Typ AS STRING * 3
+     Itm AS STRING * 3
+     Cod AS STRING * 4
+     Inv AS STRING * 8
+     Qty AS STRING * 8
+     Cog AS STRING * 8
+     Prc AS STRING * 8
+     Mat AS STRING * 28
+     Mes AS STRING * 2
+     Cus AS STRING * 28
+     Dat AS STRING * 10
+END TYPE
+
