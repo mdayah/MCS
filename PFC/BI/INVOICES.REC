@@ -1,0 +1,7 @@
+TYPE InvIndex
+     Seq AS STRING * 6
+     Cus AS STRING * 3
+     Dat AS STRING * 6
+     Num AS INTEGER
+END TYPE
+
