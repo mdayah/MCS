@@ -1,0 +1,15 @@
+TYPE Codes
+     Cod AS STRING * 4  'code
+     Typ AS STRING * 1  'type
+     Des AS STRING * 24 'description
+     Rat AS STRING * 3  'rate code
+     Del AS STRING * 1  'delete
+     Grp AS STRING * 2  'group
+     Cmb AS STRING * 2  'combo code
+     Fmv AS STRING * 3  'fair market value
+     Dtr AS STRING * 1  'drop terms
+     Dfm AS STRING * 1  'drop FMV
+     Dep AS STRING * 2  'depreciation
+     Fil AS STRING * 6  'filler
+     END TYPE
+
