@@ -1,0 +1,44 @@
+TYPE Customer
+     Num AS STRING * 3
+     Nam AS STRING * 28
+    
+     Man AS STRING * 28       'billing address
+     Tel AS STRING * 12
+     Fax AS STRING * 12
+     Add AS STRING * 28
+     Str AS STRING * 28
+     Cty AS STRING * 14
+     Sta AS STRING * 2
+     Zip AS STRING * 10
+    
+     Sco AS STRING * 28       'shipping address
+     Ste AS STRING * 12
+     Sad AS STRING * 28
+     SSr AS STRING * 28
+     SCt AS STRING * 14
+     SSt AS STRING * 2
+     SZi AS STRING * 10
+
+     Typ AS STRING * 1        'contact information
+     Acc AS STRING * 28
+     Aph AS STRING * 12
+     Afx AS STRING * 12
+     
+     Day AS STRING * 2
+     Ter AS STRING * 20       'terms
+     Vnt AS LONG              'verify net sales
+     Vpd AS LONG              'verify payments
+     Fil AS STRING * 22       'filler
+    
+     Mbb AS LONG: Ybb AS LONG 'begining balance
+     Mgr AS LONG: Ygr AS LONG 'gross sales
+     Mcr AS LONG: Ycr AS LONG 'credits
+     Mtx AS LONG: Ytx AS LONG 'sales tax
+     Mfr AS LONG: Yfr AS LONG 'freight charge
+     Moc AS LONG: Yoc AS LONG 'other charges
+     Mnt AS LONG: Ynt AS LONG 'net amount
+     Mpd AS LONG: Ypd AS LONG 'receipts
+     Mco AS LONG: Yco AS LONG 'cost of goods
+     Mor AS LONG: Yor AS LONG 'sales orders
+END TYPE
+
