@@ -1,0 +1,9 @@
+TYPE Transaction
+     Dat AS STRING * 10
+     Tim AS STRING * 8
+     Typ AS STRING * 2
+     Mgr AS STRING * 3
+     Rec AS STRING * 415
+     Prc AS LONG
+     END TYPE
+
