@@ -1,0 +1,55 @@
+TYPE Customer
+     Num AS STRING * 4         'customer number
+     Sal AS STRING * 10        'salutation
+     Nam AS STRING * 26        'name
+     Add AS STRING * 26        'address
+     Str AS STRING * 26        'street
+     Cty AS STRING * 17        'city
+     Sta AS STRING * 2         'state
+     Zip AS STRING * 5         'zip code
+     Tel AS STRING * 12        'home phone
+     Rmk AS STRING * 36        'remarks
+
+     SSn AS STRING * 11        'social security
+     Dln AS STRING * 11        'drivers license
+     Dob AS STRING * 10        'birth date
+     Mar AS STRING * 1         'marital status
+     Rac AS STRING * 1         'race
+     Sex AS STRING * 1         'sex
+
+     Emp AS STRING * 15        'employer
+     Wor AS STRING * 12        'work phone
+     Lon AS STRING * 15        '
+     Inc AS STRING * 15        'income
+     Oth AS STRING * 15        'other income
+    
+     Dis AS STRING * 3         'distance
+     Ref AS STRING * 1         'referral code
+     Typ AS STRING * 1         'type
+     Del AS STRING * 1         'not used
+     
+     Nm1 AS STRING * 26        'second name
+    
+     SS1 AS STRING * 11        'social security
+     Dl1 AS STRING * 11        'drivers license
+     Bd1 AS STRING * 10        'birth date
+     St1 AS STRING * 1         'marital status
+     Rc1 AS STRING * 1         'race
+     Sx1 AS STRING * 1         'sex
+     
+     Em1 AS STRING * 15        'employer
+     Wt1 AS STRING * 12        'work phone
+     Ln1 AS STRING * 15        '
+     In1 AS STRING * 15        'income
+     Ot1 AS STRING * 15        'other income
+     Fil AS STRING * 1         'filler          
+     Mmc AS LONG               'label extraxtion date
+     END TYPE
+TYPE CusIndex
+     Nam AS STRING * 26
+     Num AS INTEGER
+     END TYPE
+TYPE CusLine
+     Cus AS STRING * 415
+     END TYPE
+
