@@ -1,0 +1,93 @@
+TYPE Activity
+    'receipts
+     Pet(5) AS LONG      'Petty Cash
+     Pay(5) AS LONG      'Payout Amount
+     Tel(5) AS LONG      'Phone Receipts
+     Cel(5) AS LONG      'Cell-Phone Receipts
+     Sal(5) AS LONG      'Cash sales
+     Rnt(5) AS LONG      'Rental
+     Dis(5) AS LONG      'Discount
+     Tax(5) AS LONG      'Sales Tax
+     Lat(5) AS LONG      'Late Charge
+     Trp(5) AS LONG      'Trip Charge
+     Oth(5) AS LONG      'Other Charges
+     Wav(5) AS LONG      'Wavier
+     Ref(5) AS LONG      'Referral
+     Crd(5) AS LONG      'Debit/Credit
+     Una(5) AS LONG      'Unapplied
+     Amt(5) AS LONG      'Amount Paid
+    
+     Sta(0 TO 15, 5) AS LONG  'inventory status
+
+     New(5) AS LONG      'new merchandise
+     Tro(5) AS LONG      'transfer out
+     Tri(5) AS LONG      'transfer in
+     Sro(5) AS LONG      'service out
+     Sri(5) AS LONG      'service in
+     Swp(5) AS LONG      'swaped
+     
+     EZA(5) AS LONG      'EZA days
+     Frd(5) AS LONG      'FREE days
+     Ltd(5) AS LONG      'LATE days
+
+     Agn(5) AS LONG      'new agreements
+     Agv(5) AS LONG      'void agreements
+     Agt(5) AS LONG      'terminated agreements
+     Agc(5) AS LONG      'charged-off agreements
+     Agp(5) AS LONG      'promissary agreements
+     Agr(5) AS LONG      'reinstated agreements
+     
+     Rcn(5) AS LONG      'new receipts
+     Rcv(5) AS LONG      'void receipts
+     Rcb(5) AS LONG      'bad check receipts
+     Rcc(5) AS LONG      'cash sale receipts
+     
+     Inn(5) AS LONG      'total new inventory
+     Inu(5) AS LONG      'total used inventory
+     Dep(5) AS LONG      'depreciation
+     
+     Dui(0 TO 3, 8) AS INTEGER  'past due items
+     Dua(0 TO 3, 9) AS INTEGER  'past due accounts
+     Bor(0 TO 5, 5) AS INTEGER  'ins and outs
+
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+
+     'DUI(items)| 0 |  1  |  2  |  3  |  4  |  5  | 6  | 7 | 8  |
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+
+     '  store 0 | 0 | 1-4 | 5-7 | 8-13|14-30| >30 |Late|BOR|days|
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+
+     '  route 1 |   |     |     |     |     |     |    |   |    |
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+
+     '  route 2 |   |     |     |     |     |     |    |   |    |
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+
+     '  route 3 |   |     |     |     |     |     |    |   |    |
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+
+
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+----+
+     'DUA(accts)| 0 |  1  |  2  |  3  |  4  |  5  | 6  | 7 | 8  | 9  |
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+----+
+     '  store 0 | 0 | 1-4 | 5-7 | 8-13|14-30| >30 |Late|BOR|    |    |
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+----+
+     '  route 1 |   |     |     |     |     |     |    |   |    |    |
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+----+
+     '  route 2 |   |     |     |     |     |     |    |   |    |    |
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+----+
+     '  route 3 |   |     |     |     |     |     |    |   |    |    |
+     '----------+---+-----+-----+-----+-----+-----+----+---+----+----+
+
+     '----------+---+----+-------+---------+-------+-------+
+     'BOR      x| 0 |  1 |   2   |    3    |   4   |   5   |
+     '----------+---+----+-------+---------+-------+-------+
+     '  blank 0 |Ins|Outs|Paidout|ChargeOff|Beg.BOR|       |
+     '----------+---+----+-------+---------+-------+-------+
+     '  day   1 |   |    |       |         |       |       |
+     '----------+---+----+-------+---------+-------+-------+
+     '  week  2 |   |    |       |         |       |       |
+     '----------+---+----+-------+---------+-------+-------+
+     '  month 3 |   |    |       |         |       |       |
+     '----------+---+----+-------+---------+-------+-------+
+     '  year  4 |   |    |       |         |       |       |
+     '----------+---+----+-------+---------+-------+-------+
+     '  total 5 |   |    |       |         |       |       |
+     '----------+---+----+-------+---------+-------+-------+
+     END TYPE
+
