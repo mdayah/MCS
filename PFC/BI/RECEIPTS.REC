@@ -1,0 +1,10 @@
+TYPE Receipts
+    Cus AS STRING * 3
+    Dat AS STRING * 10
+    Chk AS STRING * 10
+    Tot AS STRING * 10
+    Inv(20) AS STRING * 6
+    Amt(20) AS STRING * 8
+END TYPE
+   
+

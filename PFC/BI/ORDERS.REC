@@ -1,0 +1,36 @@
+TYPE Orders
+     Num AS STRING * 6     'order sequence
+     Cus AS STRING * 3     'customer code
+     Po1 AS STRING * 12    'purchase order #1
+     Po2 AS STRING * 12    'purchase order #2
+     Dat AS STRING * 10    'order date
+     Dsh AS STRING * 10    'ship date
+     Ddl AS STRING * 10    'deliver date
+     In1 AS STRING * 63    'instructions-1
+     In2 AS STRING * 63    'instructions-2
+     In3 AS STRING * 63    'instructions-3
+     Car AS STRING * 30    'carrier
+
+     Inv AS STRING * 6     'invoice number
+     Din AS STRING * 10    'invoice date
+     Due AS STRING * 10    'date due
+     Dlv AS STRING * 10    'date delivered
+     Dpd AS STRING * 10    'date paid
+     Chk AS STRING * 10    'check number
+     Pmt AS STRING * 8     'amount paid
+
+     Grs AS STRING * 8     'gross amount
+     Crd AS STRING * 8     'credits
+     Tax AS STRING * 8     'sales tax
+     Frt AS STRING * 8     'freight charge
+     Chg AS STRING * 8     'Other charges
+     Net AS STRING * 8     'net amount
+
+     Itm(25) AS STRING * 3 'item number
+     Qty(25) AS STRING * 7 'qty ordered
+     Qts(25) AS STRING * 7 'qty sold
+     Wts(25) AS STRING * 8 'wieght shipped
+     Cst(25) AS STRING * 8 'cost of goods
+     Prc(25) AS STRING * 8 'sale price
+END TYPE
+
