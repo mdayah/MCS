@@ -1,0 +1,9 @@
+TYPE OpnIndex
+     Typ AS STRING * 2
+     Itm AS STRING * 3
+     Cus AS STRING * 3
+     Dat AS STRING * 10
+     Qty AS STRING * 7
+     Num AS INTEGER
+END TYPE
+
