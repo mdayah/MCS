@@ -1,0 +1,19 @@
+TYPE Vendors
+   Num AS STRING * 3
+   Nam AS STRING * 28
+   Ord AS STRING * 28
+   Cnt AS STRING * 28
+   Add AS STRING * 28
+   Str AS STRING * 28
+   Cty AS STRING * 14
+   Sta AS STRING * 2
+   Zip AS STRING * 10
+   Tel AS STRING * 12
+   Fax AS STRING * 12
+   Act AS STRING * 16
+   Dis AS STRING * 2
+   Trm AS STRING * 2
+   Mbb AS LONG: Mgr AS LONG: Mds AS LONG: Mcr AS LONG: Mpd AS LONG
+   Ybb AS LONG: Ygr AS LONG: Yds AS LONG: Ycr AS LONG: Ypd AS LONG
+END TYPE
+
