@@ -1,0 +1,23 @@
+TYPE Material
+     Num AS STRING * 3   'item number
+     Typ AS STRING * 2   'type
+     Nam AS STRING * 32  'description
+     Fra AS STRING * 4   'fraction
+     Mes AS STRING * 5   'measure
+     Con AS STRING * 4   'container
+     Ref AS STRING * 6   'reference cost
+     Rpt AS STRING * 5   'reorder point
+     Rqt AS STRING * 5   'reorder quantity
+     Cnt AS STRING * 8   'physical count
+     Vmq AS LONG         'verify month quantity requistions
+     Vmc AS LONG         'verify year  cost     requistions
+     Vyq AS LONG         'verify month quantity requistions
+     Vyc AS LONG         'verify year  cost     requistions
+     
+     Mbq AS LONG: Mbp AS LONG: Ybq AS LONG: Ybp AS LONG 'beg. balance
+     Mpq AS LONG: Mpp AS LONG: Ypq AS LONG: Ypp AS LONG 'purchases
+     Mkq AS LONG: Mkp AS LONG: Ykq AS LONG: Ykp AS LONG 'kitchen usage
+     Mwq AS LONG: Mwp AS LONG: Ywq AS LONG: Ywp AS LONG 'waste
+     Ygq AS LONG: Ygp AS LONG                           'losses
+END TYPE
+

@@ -1,0 +1,27 @@
+TYPE Products
+     Num AS STRING * 3   'item number
+     Typ AS STRING * 2   'type
+     Nam AS STRING * 32  'description
+     Fra AS STRING * 4   'fraction
+     Mes AS STRING * 5   'measure
+     Con AS STRING * 4   'container
+     Wat AS STRING * 6   'wieght
+     Ref AS STRING * 7   'reference cost
+     Prc AS STRING * 7   'reference price
+     Cnt AS STRING * 8   'physical count
+     Vyq AS LONG         'verify month production
+     Vyc AS LONG         'verify year production
+
+     Msw AS LONG: Ysw AS LONG                           'Wieght sold
+     
+     Mbq AS LONG: Mbp AS LONG: Ybq AS LONG: Ybp AS LONG 'Beg Baclance
+     Mpq AS LONG: Mpp AS LONG: Ypq AS LONG: Ypp AS LONG 'Production
+     Msq AS LONG: Msp AS LONG: Ysq AS LONG: Ysp AS LONG 'Sales
+     Mwq AS LONG: Mwp AS LONG: Ywq AS LONG: Ywp AS LONG 'Spoilage
+                               Ygq AS LONG: Ygp AS LONG 'Gains or Loss
+     Msc AS LONG: Ysc AS LONG                           'Cost of Sales
+     Moq AS LONG: Yoq AS LONG                           'Sales orders
+     Mlc AS LONG: Ylc AS LONG                           'Labor cost
+     Moc AS LONG: Yoc AS LONG                           'Overhead cost
+END TYPE
+
