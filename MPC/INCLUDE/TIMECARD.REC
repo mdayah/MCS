@@ -1,0 +1,8 @@
+TYPE TimeCard
+     Clk(0 TO 6, 0 TO 3) AS STRING * 4
+     Thr(0 TO 6)         AS STRING * 6
+     Hrs                 AS STRING * 6
+     Reg                 AS STRING * 6
+     Ovt                 AS STRING * 6
+END TYPE
+
