@@ -1,0 +1,8 @@
+TYPE Recipes
+    Num AS STRING * 3       'product number
+    Yld AS STRING * 5       'standared yield
+    Ins(1 TO 40) AS STRING * 26  'instructions
+    Itm(1 TO 41) AS STRING * 3   'item number
+    Qty(1 TO 41) AS STRING * 7   'quantity
+    END TYPE
+

@@ -1,0 +1,12 @@
+TYPE Jobcost
+    Pro AS STRING * 3          'product number
+    Yld AS STRING * 5          'job yield
+    Bat AS STRING * 5          'batch
+    Mat AS STRING * 8          'materials cost
+    Lab AS STRING * 8          'labor costs
+    Ovh AS STRING * 8          'overhead
+    Itm(1 TO 41) AS STRING * 3 'item number
+    Qty(1 TO 41) AS STRING * 7 'quantity
+    Prc(1 TO 41) AS STRING * 8 'cost
+    END TYPE
+
