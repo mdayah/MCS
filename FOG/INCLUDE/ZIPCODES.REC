@@ -1,0 +1,6 @@
+TYPE ZipCodes
+     Cod AS STRING * 5     'Zip codes
+     Mrk AS STRING * 1     'Mark for printing
+     Num AS INTEGER        'customers with same zip code
+     END TYPE
+
