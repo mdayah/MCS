@@ -1,0 +1,63 @@
+DECLARE FUNCTION Confirm% (f$)
+DECLARE FUNCTION Response (f$)
+DECLARE FUNCTION FJulian$ (d&)
+DECLARE FUNCTION TJulian& (d$)
+DECLARE FUNCTION DayWeek$ (d$)
+DECLARE FUNCTION DateDif& (d$, t$)
+DECLARE FUNCTION DayMath$ (d$, d%)
+DECLARE FUNCTION MonMath$ (d$, d%)
+
+DECLARE SUB Heading (f$)
+DECLARE SUB StatLin (f$)
+DECLARE SUB WinMssg (f$)
+DECLARE SUB KeyPres (f$)
+DECLARE SUB SubMenu (s%, n$)
+DECLARE SUB Printing (c%, s%)
+DECLARE SUB Picture (r%, c%, s%, f$)
+DECLARE SUB EntryX (r%, c%, e%, b%, f$)
+DECLARE SUB EntryT (r%, c%, e%, b%, f$)
+DECLARE SUB EntryD (r%, c%, e%, b%, f$)
+DECLARE SUB EntryU (r%, c%, s%, e%, b%, f$)
+DECLARE SUB EntryS (r%, c%, s%, e%, b%, f$)
+DECLARE SUB EntryN (r%, c%, s%, d%, e%, b%, f$)
+
+DECLARE FUNCTION WinStor ()
+DECLARE FUNCTION WinAcct ()
+
+DECLARE FUNCTION PrinterReady (BYVAL r)
+DECLARE SUB UnCalcAttr (f, b, a)
+DECLARE SUB PrtSc (BYVAL e)
+DECLARE SUB qPrint (s$, BYVAL r, BYVAL c, BYVAL p, BYVAL f)
+DECLARE SUB FileCount (f$, BYVAL a, c, e)
+DECLARE SUB LoadDir (f$, BYVAL a, BYVAL s, BYVAL o, e)
+
+REM $INCLUDE: '\WORK\FOG\INCLUDE\Stores.REC'
+REM $INCLUDE: '..\BI\Accounts.REC'
+
+   'common variables
+   '----------------
+    DIM ErrS(5)            AS INTEGER
+    COMMON SHARED LineNum  AS INTEGER
+    COMMON SHARED PageNum  AS INTEGER
+    COMMON SHARED Digit()  AS STRING
+    COMMON SHARED dWeek()  AS STRING
+    COMMON SHARED Path     AS STRING
+    COMMON SHARED ErrSw()  AS INTEGER
+
+    COMMON SHARED ComCode   AS STRING * 3
+    COMMON SHARED Company   AS STRING * 30
+    COMMON SHARED Street    AS STRING * 30
+    COMMON SHARED Address   AS STRING * 30
+    COMMON SHARED City      AS STRING * 30
+    COMMON SHARED Payroll   AS STRING * 1
+    COMMON SHARED TaxID     AS STRING * 10
+    COMMON SHARED EmpID     AS STRING * 7
+    COMMON SHARED LastOrder AS LONG
+
+    COMMON SHARED Sto AS Stores
+    COMMON SHARED Acc AS Accounts
+
+    DIM SHARED Digit(1 TO 3, 0 TO 9) AS STRING
+    DIM SHARED dWeek(0 TO 6)         AS STRING
+    DIM SHARED ErrSw(1 TO 6)         AS INTEGER
+
