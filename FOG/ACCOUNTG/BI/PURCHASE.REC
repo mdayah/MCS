@@ -1,0 +1,9 @@
+TYPE Purchase
+    Inv AS STRING * 5
+    Itm(1 TO 25) AS STRING * 3
+    Qty(1 TO 25) AS STRING * 5
+    Cst(1 TO 25) AS STRING * 8
+    Dis(1 TO 25) AS STRING * 5
+    Amt(1 TO 25) AS STRING * 8
+END TYPE
+
