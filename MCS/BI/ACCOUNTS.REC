@@ -1,0 +1,10 @@
+TYPE Accounts
+     Typ AS STRING * 1
+     Num AS STRING * 4
+     Nam AS STRING * 32
+     Crd AS STRING * 5
+     Mbb AS LONG: Ybb AS LONG
+     Mdb AS LONG: Ydb AS LONG
+     Mcr AS LONG: Ycr AS LONG
+END TYPE
+

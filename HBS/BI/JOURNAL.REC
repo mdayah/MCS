@@ -1,0 +1,12 @@
+TYPE Journal
+     Dat AS STRING * 10
+     Acc AS STRING * 5
+     Amt AS STRING * 10
+     dbc AS STRING * 1
+     Des AS STRING * 40
+     END TYPE
+TYPE JrnIdex
+     Dat AS STRING * 6
+     Num AS INTEGER
+     END TYPE
+
