@@ -1,0 +1,18 @@
+DECLARE FUNCTION FJulian$ (J&)
+DECLARE FUNCTION TJulian& (d$)
+DECLARE FUNCTION DayWeek$ (d$)
+DECLARE FUNCTION DateDif& (d$, T$)
+DECLARE FUNCTION DayMath$ (d$, d%)
+DECLARE FUNCTION MonMath$ (d$, d%)
+
+DECLARE SUB Picture (r%, c%, s%, f$)
+DECLARE SUB EntryX (r%, c%, e%, b%, f$)
+DECLARE SUB EntryT (r%, c%, e%, b%, f$)
+DECLARE SUB EntryD (r%, c%, e%, b%, f$)
+DECLARE SUB EntryU (r%, c%, s%, e%, b%, f$)
+DECLARE SUB EntryS (r%, c%, s%, e%, b%, f$)
+DECLARE SUB EntryN (r%, c%, s%, d%, e%, b%, f$)
+
+COMMON SHARED LineNum AS INTEGER
+COMMON SHARED PageNum AS INTEGER
+
