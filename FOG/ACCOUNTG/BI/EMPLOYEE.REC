@@ -1,0 +1,77 @@
+TYPE Employee
+     Num AS STRING * 3          'Employee number
+     Dpt AS STRING * 1          'Department
+     Sto AS STRING * 2          'Store
+     Nam AS STRING * 24         'Employee name
+     Add AS STRING * 24         'Address
+     Cty AS STRING * 15         'City
+     Sta AS STRING * 2          'State
+     Zip AS STRING * 5          'Zip Code
+     Eml AS STRING * 24         'E-mail address
+     Tel AS STRING * 12         'Telephone
+     Ddp AS STRING * 10         'Direct deposit
+     SSn AS STRING * 11         'Social Security
+     Hir AS STRING * 10         'Date Hired
+     Rel AS STRING * 10         'Date released
+     Ras AS STRING * 10         'Date raise
+     Typ AS STRING * 1          'Salary or wages
+     Mar AS STRING * 1          'Marital Status
+     Dep AS STRING * 1          'Dependants
+     Tax AS STRING * 1          'Tax method
+     Pay AS STRING * 8          'Wages
+     Ins AS STRING * 8          'Insurance
+     Ded AS STRING * 8          'Other deductions
+     Gar AS STRING * 8          'Garnishment
+     Bon AS STRING * 8          'Bonus pay
+     Cal AS STRING * 1          'Calculated
+     Mrh AS LONG: Qrh AS LONG: Yrh AS LONG  'Regular hours
+     Moh AS LONG: Qoh AS LONG: Yoh AS LONG  'Overtime hours
+     Mrp AS LONG: Qrp AS LONG: Yrp AS LONG  'Regular pay
+     Mop AS LONG: Qop AS LONG: Yop AS LONG  'Overtime pay
+     Mbo AS LONG: Qbo AS LONG: Ybo AS LONG  'Bonus pay
+     Mgr AS LONG: Qgr AS LONG: Ygr AS LONG  'Gross pay
+     Mft AS LONG: Qft AS LONG: Yft AS LONG  'FIT
+     Mfi AS LONG: Qfi AS LONG: Yfi AS LONG  'FICA
+     Mmd AS LONG: Qmd AS LONG: Ymd AS LONG  'Medicare
+     Mst AS LONG: Qst AS LONG: Yst AS LONG  'State tax
+     Min AS LONG: Qin AS LONG: Yin AS LONG  'Insurance
+     Mod AS LONG: Qod AS LONG: Yod AS LONG  'Other Deductions
+     Mnt AS LONG: Qnt AS LONG: Ynt AS LONG  'Net pay
+
+     Clk(1, 6, 3) AS STRING * 4 'hours in and out
+     Hrs(1, 9)    AS STRING * 6 'total hours
+     Tot(2)       AS STRING * 6 'tot, reg, ovt
+     END TYPE
+
+TYPE EmpIndex
+     Dpt AS STRING * 1          'Department
+     Sto AS STRING * 2          'Store
+     Nam AS STRING * 24         'Employee name
+     Num AS STRING * 3          'Employee number
+     END TYPE
+
+TYPE EmpCheck
+     Emp AS STRING * 3          'Employee number
+     Dat AS STRING * 10         'Check date
+     Chk AS STRING * 8          'Check number
+     Sta AS STRING * 4          'Check status
+     Lrh AS LONG                'Regular hours
+     Loh AS LONG                'Overtime hours
+     Lrp AS LONG                'Regular pay
+     Lop AS LONG                'Overtime pay
+     Lbo AS LONG                'Bonus
+     Lgr AS LONG                'Gross
+     Lft AS LONG                'FIT
+     Lfi AS LONG                'FICA
+     Lmd AS LONG                'Medicare
+     Lin AS LONG                'Insurance
+     Lod AS LONG                'Other dedcutions
+     Lnt AS LONG                'Net
+     END TYPE
+
+TYPE ChkIndex
+     Emp AS INTEGER             'Employee number
+     Dat AS LONG                'Check date
+     Num AS LONG                'index pointer
+     END TYPE
+
