@@ -1,0 +1,349 @@
+                        MicroHelp VBTools 3
+
+Commercial release date: 08-09-93
+
+This file contains important post release information and changes to the
+documentation since the manual was printed.
+
+==========================================================================
+BBS Access
+----------
+
+Any registered user of VBTools 3 can download the latest version of the
+files from our BBS.  The first time you call the BBS, please leave a (C)omment
+to the SYSOP by using the "C" command, and leave the name under which the
+product is registered as well as your serial number.  We check the BBS at
+least twice each business day (morning and afternoon) and will clear you
+into the conference as soon as possible.  We cannot give you access to the
+BBS until you register the product.
+
+Once you are cleared into the conference, enter "J;VBTOOLS" to join the
+conference.  To view the latest files, enter "F;8" once you are in the
+conference.  More information about our BBS including the telephone
+number is listed in your documentation and in the Windows help file
+under "Technical Support".
+
+==========================================================================
+Setup and Windows 3.0
+---------------------
+If you are running Windows 3.0 and you receive a message "Unable to
+load LZEXPAND.DLL", all you need to do is copy the LZEXPAND.DLX file from 
+distribution disk 1 to your WINDOWS\SYSTEM directory as LZEXPAND.DLL and then 
+restart the Setup program.
+
+==========================================================================
+Version 1.x Controls Included for Upward Compatibility
+------------------------------------------------------
+The following controls are included in version 3 of VBTools for upward 
+compatibility only. These controls were designed to enhance Visual Basic
+version 1.0, but their functionality has been duplicated by features
+built into the VB language by Microsoft. If you are still using Visual
+Basic version 1.0, or if you are using Visual C++, these controls may be
+of use to you:
+
+	MhLine	MhFlip	MhMDI	MhVScroll	MhHScroll	MhTag
+
+==========================================================================
+Manual Errata:
+--------------
+MhDragDrop
+
+Docs should show both params in the event FilesDropped as
+INTEGER not as SINGLE. (X as INTEGER, Y as INTEGER)
+
+MhFileList
+
+If you want to set the title for this control in code, you must separate
+the columns with a Chr$(9) and follow the last column with a Chr$(9) as
+well.
+
+
+MhOutBox
+
+If you load bitmaps that contain palettes into MhOutBox the GDI will not 
+release the palettes correctly, taking down GDI resource by 2/10ths of 1% 
+per run/end cycle.  Microsoft has confirmed this as a known Windows bug 
+concerning metafiles (which is the storage format used by MhOutBox) and that 
+it will be fixed in a future version of Windows. (Note: See MSDN CDROM 
+Article #: Q98268 for further information).  Note: Only bitmaps containing 
+palettes cause this problem.  Non-palettized bitmaps don't exhibit this.
+
+============================================================================
+
+         Additional MhOutbox Notes / Documentation / Hints
+
+The AutoSize property determines whether an Outbox is fitted to the size of a 
+picture you load.  If AutoSize and EraseForRead are both TRUE, any previous 
+contents are discarded and the Outbox is resized to fit the loaded picture.  
+If AutoSize is TRUE and EraseForRead is FALSE, the loaded picture is 
+stretched to fill the Outbox.  If AutoSize is FALSE, neither the picture nor 
+the Outbox is resized.  Resizing an Outbox with AutoSize FALSE will update 
+the Window extents (WindowExtX & WindowExtY).  Resizing with AutoSize TRUE 
+will not update the Window extents.
+
+If you increase Window extent properties (by setting WindowExtX & WindowExtY 
+or by resizing with AutoSize FALSE) and then later decrease the property 
+values, the control will remember the largest size reached and scale 
+accordingly.  Size information is reinitialized by a ClearBox (or Clear) or
+by loading a picture with AutoSize and EraseForRead both set to TRUE or by a 
+resize event.  If you write to the Clipboard or a disk Metafile, most 
+programs will clip and size to the limits of the Window extent properties, 
+which can miss showing portions of the image you see in the Outbox. Reading 
+a metafile with EraseForRead FALSE will update the Outbox window values if 
+the origin or extent read is larger than previously seen.  Remember:  
+WindowOrg & WindowExt are logical coordinates and ViewportOrg & ViewportExt 
+are physical coordinates, and the ExtXY values are width and height--not 
+right and bottom.
+
+The preferred MapMode is Anisotropic and the preferred units are HI_METRIC.  
+This combination fits best with Clipboard and Metafile conventions.  Most 
+other MapModes are not valid for the Clipboard.  Treatment of clearing and 
+backcolor are different for Anisotropic than for other MapModes.  Anisotropic 
+Clear writes a record to the working metafile that will be adjusted later for 
+any change in size so the backcolor from the time of the clear will always 
+fill the Outbox.  Clearing in all other MapModes clears the on-screen Outbox 
+to the backcolor but doesn't write to the working metafile, so a resize will 
+lose the backcolor.
+
+Just changing backcolor does not retroactively fill in the background of the 
+Outbox.  The Outbox will be filled with the backcolor only on a clear or a 
+read or load of a picture with EraseForRead TRUE.
+
+Only one palette in the working metafile is supported.  The first bitmap with 
+a palette that is read supplies that palette.  Bitmaps read later will have 
+their palettes ignored.
+
+Recommended sequence to create an Outbox (metafile) containing several 
+bitmaps of the same size:  Set AutoSize and EraseForRead both TRUE.  
+LoadPicture for the first bitmap (if you are using palettes, the palette you 
+want used for all should be in the first bitmap you load).  If you want to 
+see the results as you go, resize the Outbox to an area large enough to see 
+all your bitmaps when each is the same size as the first while AutoSize is 
+still TRUE.  Set AutoSize and EraseForRead both FALSE.
+
+Repeat:
+  Set WindowOrgX and WindowOrgY to values for where to put the upper left 
+  corner of the next bitmap you plan to use.
+  LoadPicture for your next bitmap.
+EndRepeat
+
+Resize the Outbox to your final size.  This resizing with AutoSize FALSE will 
+adjust origins and extents in a way that will allow other applications to see 
+the whole set of bitmaps if copied through the clipboard or a disk metafile.  
+Until this resizing, the Window extents have values from the first bitmap that 
+cause many applications to only show the first bitmap after a paste or read.
+
+To work with bitmaps of different sizes, set AutoSize FALSE after the first 
+bitmap is read and set WindowExtX & WindowExtY to the size you want each 
+later bitmap to use just before reading the bitmap.  This allows you to put a 
+smaller bitmap on top of (in front of) a larger one.  If you don't set the 
+extents, each bitmap read will stretch to fill the window, completely hiding 
+any previous images.
+
+Because Outbox is built on Windows Metafiles, it suffers from their 
+limitations.  Text handling, especially scaling, in metafiles is very weak.  
+It is almost unusable in most MapModes and only tolerable in Anisotropic and 
+Text modes.  If you will be doing much work with text, experiment extensively 
+to determine what sizes on screen and printer you need and what you will get 
+with various combinations of screen and printer Viewports and Windows.  If 
+you use ExtTextOut mode 8, what gets written to the working metafile is a set 
+of one-line ExtTextOut calls with line breaks and text metrics appropriate to 
+the current display at the time of the ExtTextOut call, so use this carefully.
+
+All the shape properties (Arc, BCircle, BLine, Chord, etc.) take string 
+arguments of sets of integers separated by at least one space (or comma).
+
+The ColorPrint property determines whether any fill or background colors are 
+sent to the printer.  When it is FALSE, no color settings go to the printer, 
+which eliminates all but the outlines of shapes but prevents loss of 
+readability due to dithering on many monochrome printers.
+
+The EndPage property must be set to trigger the Outbox to write to most 
+OutContexts except the screen.
+
+Several new properties were added in October 1993:
+BrushStyle -- style for color fills; default SOLID.
+HatchStyle -- style when BrushStyle is HATCH.
+PenStyle -- style for lines; default SOLID.
+PenWidth -- default 0; values > 1 cause PenStyle to be treated as SOLID.
+BezierSteps -- number of line segments to use in drawing Bezier curves; 
+               default 32.
+PolyBezier -- approximation of NT function; draws a Bezier curve as a series 
+              of straight lines; requires at least 8 coordinates (starting 
+              pair + curve count * 3 pair); unlike NT call, use of lines does 
+              affect current pointer.
+The default value of ColorPrint was changed from FALSE to TRUE.
+
+.BrushStyle Property
+This property set/returns the style of brush to use when filling a geometric
+shape with color.  This property is an enumerated property with the following
+values:
+
+0 - Solid
+1 - Hollow
+2 - Hatched  (.HatchStyle determines hatch pattern)
+
+
+.HatchStyle Property
+
+The property determines the pattern that is used to fill in geometric shapes
+that are drawn into the outbox.  This property is only used if .BrushStyle = 2
+(Hatched).  This property is an enumerated property with the following 
+values.
+
+0 - Horizontal Hatching
+1 - Vertical
+2 - FDiagonal
+3 - BDiagonal
+4 - Cross
+5 - Diagonal Cross
+
+.PenStyle property
+
+This property set/returns the style of pen used when drawing lines.  This 
+property is an enumerated property with the following values:  NOTE:  Pen
+Width can't be > 1 for this property to take affect.
+
+0 - Solid
+1 - Dashed
+2 - Dotted
+3 - Dash - Dot
+4 - Dash - Dot - Dot
+5 - Null Pen
+6 - InsideFrame (See WIN SDK CreatePen call for further info)
+
+.PenWidth property
+
+This property set/returns the width of pen (in units) used when drawing 
+lines.  When set to 0 or 1 the .PenStyle property determines the type of
+line that is drawn (solid, dashed, etc.)
+
+.BezierSteps property
+
+This property set/returns the number of line segments that are used to
+draw a bezier curve using the .PolyBezier property.  The higher the number
+of segments the smoother the resolution of the curve.  Note:  This is a 
+simulation of Bezier Curvers using line segment so each .PolyBezier setting
+will actually produce (.BezierSteps) line segments in the metafile.  The 
+default value of this property is 32 segments.  If you use a low number of
+segments then your curve will have a "polygon" look.  Note:  This is the 
+number of segment per curve.
+
+.PolyBezier
+
+This property is used to define the points to draw a Bezier curve to the
+Outbox.  The points consist of StartX, StartY, Control1X, Control1Y, 
+Control2X, Control2Y, EndX, EndY.  This is for a single curve.  For multiple
+curves continue to specify Control1X, Control1Y, Control2X, Control2Y, EndX,
+and EndY after the single curve settings.  Each successive curve uses the 
+previous end points as its start point.  The property appoximates the 
+Microsoft Windows NT PolyBezier function call with a series of lines.  Note:  
+Setting this property *does* affect your current pointer (unlike NT).  
+
+Example:
+
+Single Curve:
+MhOutbox1.PolyBezier = "200 200 2000 2000 4000 0 6000 200"
+
+Multiple Curves:
+MhOutbox1.PolyBezier = "200 200 2000 2000 4000 0 6000 200 
+                         4000 2000 8000 4000 6000 6000"
+
+
+
+MhCommonDialog and MDI apps
+----------------------------
+If you put a MHCOMD.VBX control on a MDI child form, the 
+CommonDialogOpened custom event for this control will NOT
+be fired.  A workaround is to put the control on a non-MDI child 
+form that is never shown (Visible property set to False).  However, 
+there are two problems associated with this workaround:
+
+1) The common dialogs will no longer be modal.  For modality you
+must disable your MDI form before setting the .Action property,
+and renable it immediately thereafter.  You should also set
+focus back to the MDI parent since you will probably experience
+a focus shift when disabling the form.
+
+2) You will have to unload the non-MDI child form containing the
+MHCOMD.VBX "manually" by using the FormName.Unload.  Non-MDI
+child forms are not automatically unloaded when you unload the
+MDI parent. Failure to unload this form will cause your program
+not to terminate and may crash Windows.
+
+If you are NOT using the custom events, then this problem will
+NOT effect you.  Simply place the MhCommonDialog control on a
+MDI Child form, and use it as documented.
+
+We have reported the problem of the VB events not being fired to
+Microsoft, but have yet to receive any information on how to
+resolve this conflict.
+
+
+3-d effects for MhCommonDialog
+------------------------------
+
+During testing we found that it was much better for the VB programmer to
+provide 3-d effects for all dialogs on a per/programm basis, rather than
+trying to do it for each dialog. With that in mind the following information
+is provided so that you might give your dialogs (including common dialogs) a
+3-d look.
+
+ 'CTL3D.DLL routines
+  '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   Declare Function Ctl3dAutoSubclass Lib "ctl3d.dll" (ByVal HANDLE%) As Integer
+   Declare Function Ctl3dRegister Lib "ctl3d.dll" (ByVal HANDLE%) As Integer
+   Declare Function Ctl3dUnRegister Lib "ctl3d.dll" (ByVal HANDLE%) As Integer
+   Declare Function MhGetHInstance Lib "mhrun300.dll" () As Integer
+   Dim gHANDLE%
+   
+To convert the common dialog sample to 3-d effects add the above 
+declarations to the form's general declarations section and the 
+following code segments to the program:
+
+Sub Form_Load ()
+ gHANDLE% = MhGetHInstance()
+ result% = Ctl3dRegister(gHANDLE%)
+ result% = Ctl3dAutoSubclass(gHANDLE%)
+End Sub
+   
+Sub Form_Unload (Cancel As Integer)
+ result% = Ctl3dUnRegister(gHANDLE%)
+End Sub
+
+=======================================================================
+New Properties
+--------------
+
+Connect (Boolean)
+
+Description:  Sets or returns whether lines will be drawn in the tree
+that depict the tree structure.
+
+Applies to: MhTree
+
+Usage: [form.]ctlname.Connect = False
+
+Remarks:  The default value is True (-1).
+
+Setting	Description
+-------------------
+True (-1)	The lines will be drawn to show the tree structure.
+False(0)	No lines will be drawn.
+
+--------------------------------------------------------------------------
+
+
+VC++ users
+------------
+
+Class Wizard does not show messages
+-----------------------------------
+In Visual C++, messages sometimes do not appear in Class Wizard for 
+VBX controls.  This often happens when loading in our sample programs.  
+This is a problem with Visual C++, not with our controls (Microsoft 
+has acknowledged the problem).  If the VBX custom controls were not 
+explicitly loaded in App Studio using Install Controls the messages will 
+not show up.  To correct this problem, remove the affected controls from 
+App Studio and immediately re-install them.  The messages will then 
+be available in Class Wizard.
