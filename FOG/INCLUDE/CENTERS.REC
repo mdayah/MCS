@@ -1,0 +1,15 @@
+TYPE Centers
+     Num AS STRING * 2
+     Nam AS STRING * 26
+     Str AS STRING * 26
+     Cty AS STRING * 17
+     Sta AS STRING * 2
+     Zip AS STRING * 5
+     Typ AS STRING * 1
+     Trm AS STRING * 2
+     Tel AS STRING * 12
+     Fil AS STRING * 2
+     Mbb AS LONG: Mam AS LONG: Mpd AS LONG
+     Ybb AS LONG: Yam AS LONG: Ypd AS LONG
+     END TYPE
+
