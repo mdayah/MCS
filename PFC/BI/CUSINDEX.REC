@@ -1,0 +1,6 @@
+TYPE CusIndex
+     Cod AS STRING * 3
+     Nam AS STRING * 28
+     Num AS INTEGER
+END TYPE
+
