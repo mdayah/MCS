@@ -1,0 +1,17 @@
+TYPE Journal
+     Num AS LONG
+     Dat AS STRING * 10
+     Sto AS STRING * 2
+     Act(10) AS STRING * 2
+     Amt(10) AS STRING * 8
+     Typ(10) AS STRING * 1
+     Tot    AS LONG
+     Dsc AS STRING * 32
+END TYPE
+
+TYPE JrnInx
+     Num AS LONG
+     Sto AS STRING * 2
+     Dat AS LONG
+END TYPE
+
