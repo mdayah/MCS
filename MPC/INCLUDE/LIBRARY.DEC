@@ -1,0 +1,19 @@
+DECLARE SUB WinMssg (f$)
+
+DECLARE FUNCTION Confirm% ()
+DECLARE FUNCTION FJulian$ (d&)
+DECLARE FUNCTION TJulian& (f$)
+DECLARE FUNCTION DayWeek$ (f$)
+DECLARE FUNCTION DateDif& (f$, t$)
+DECLARE FUNCTION DayMath$ (f$, d%)
+DECLARE FUNCTION MonMath$ (f$, d%)
+
+DECLARE SUB Picture (r%, c%, s%, f$)
+DECLARE SUB EntryT (r%, c%, e%, b%, f$)
+DECLARE SUB EntryD (r%, c%, e%, b%, f$)
+DECLARE SUB EntryS (r%, c%, s%, e%, b%, f$)
+DECLARE SUB EntryU (r%, c%, s%, e%, b%, f$)
+DECLARE SUB EntryN (r%, c%, s%, d%, e%, b, f$)
+
+
+
