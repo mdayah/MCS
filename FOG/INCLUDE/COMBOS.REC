@@ -1,0 +1,11 @@
+TYPE Combos
+     Cod         AS STRING * 4   'code
+     Des         AS STRING * 24  'description
+     Rat         AS STRING * 3   'rate number
+     Cde(1 TO 4) AS STRING * 2   'combo code
+     Grp         AS STRING * 2   'group
+     Dtr         AS STRING * 1   'drop terms
+     Dfm         AS STRING * 1   'drop FMV
+     Fil         AS STRING * 6   'filler
+     END TYPE
+
