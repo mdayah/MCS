@@ -1,0 +1,6 @@
+TYPE Index
+     Grp AS STRING * 1
+     Nam AS STRING * 24
+     Num AS STRING * 2
+END TYPE
+

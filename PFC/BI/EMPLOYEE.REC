@@ -1,0 +1,25 @@
+TYPE Employee
+     Num AS STRING * 2
+     Nam AS STRING * 24
+     Add AS STRING * 24: Cty AS STRING * 15
+     Sta AS STRING * 2: Zip AS STRING * 5
+     SSn AS STRING * 11: Tel AS STRING * 11
+     Hir AS STRING * 11: Rel AS STRING * 11
+     Typ AS STRING * 1: Mar AS STRING * 1
+     Dep AS STRING * 1: Tax AS STRING * 1
+     Pay AS STRING * 8: Ins AS STRING * 7
+     Ded AS STRING * 7: Bon AS STRING * 7
+     Qrh AS LONG: Yrh AS LONG
+     Qoh AS LONG: Yoh AS LONG
+     Qrp AS LONG: Yrp AS LONG
+     Qop AS LONG: Yop AS LONG
+     Qbo AS LONG: Ybo AS LONG
+     Qgr AS LONG: Ygr AS LONG
+     Qft AS LONG: Yft AS LONG
+     Qfi AS LONG: Yfi AS LONG
+     Qin AS LONG: Yin AS LONG
+     Qdd AS LONG: Ydd AS LONG
+     Qnt AS LONG: Ynt AS LONG
+     Grp AS STRING * 1
+END TYPE
+

@@ -1,0 +1,9 @@
+TYPE Accounts
+    Num AS STRING * 2
+    Nam AS STRING * 27
+    Typ AS STRING * 1: Crd AS STRING * 2
+    Mbb AS LONG: Mdb AS LONG: Mcr AS LONG
+    Ybb AS LONG: Ydb AS LONG: Ycr AS LONG
+    Fil AS STRING * 1
+END TYPE
+
