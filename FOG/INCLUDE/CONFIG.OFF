@@ -1,0 +1,130 @@
+DECLARE FUNCTION FJulian$ (J&)
+DECLARE FUNCTION TJulian& (d$)
+DECLARE FUNCTION DayWeek$ (d$)
+DECLARE FUNCTION DateDif& (d$, t$)
+DECLARE FUNCTION DayMath$ (d$, d%)
+DECLARE FUNCTION MonMath$ (d$, d%)
+
+DECLARE FUNCTION FindPas (f$)
+DECLARE FUNCTION FindIni (f$)
+DECLARE FUNCTION FindSer (f$)
+DECLARE FUNCTION FindCod (f$)
+DECLARE FUNCTION FindCmb (f$)
+DECLARE FUNCTION FindPrc (f$)
+
+DECLARE FUNCTION WinItem (c%, i%)
+DECLARE FUNCTION WinComb ()
+DECLARE FUNCTION WinCntr ()
+DECLARE FUNCTION WinStor ()
+DECLARE FUNCTION WinPric ()
+
+DECLARE FUNCTION PassWord (f$)
+DECLARE FUNCTION Response (f$)
+DECLARE FUNCTION Confirm (c%, f$)
+
+DECLARE SUB OpenFiles ()
+
+DECLARE SUB Statlin (f$)
+DECLARE SUB KeyPres (f$)
+DECLARE SUB FindGrp (f$)
+DECLARE SUB WinMssg (f$)
+DECLARE SUB WinRate ()
+
+DECLARE SUB Picture (r, c, s, f$)
+DECLARE SUB EntryX (r, c, e, b, f$)
+DECLARE SUB EntryT (r, c, e, b, f$)
+DECLARE SUB EntryD (r, c, e, b, f$)
+DECLARE SUB EntryU (r, c, s, e, b, f$)
+DECLARE SUB EntryS (r, c, s, e, b, f$)
+DECLARE SUB EntryN (r, c, s, d, e, b, f$)
+
+DECLARE FUNCTION PrinterReady% (BYVAL r%)
+DECLARE SUB PrtSc (BYVAL e%)
+DECLARE SUB qPrint (s$, BYVAL r, BYVAL c, BYVAL p, BYVAL f)
+
+REM $INCLUDE: '..\Include\Codes.REC'
+REM $INCLUDE: '..\Include\Combos.REC'
+REM $INCLUDE: '..\Include\Prices.REC'
+REM $INCLUDE: '..\Include\Rates.REC'
+REM $INCLUDE: '..\Include\PassWord.REC'
+REM $INCLUDE: '..\Include\Stores.REC'
+REM $INCLUDE: '..\Include\Centers.REC'
+REM $INCLUDE: '..\Include\Inventor.OFF'
+REM $INCLUDE: '..\Include\Customer.OFF'
+REM $INCLUDE: '..\Include\Agreemnt.OFF'
+REM $INCLUDE: '..\Include\Receipts.OFF'
+
+   'array variables
+   '---------------
+    DIM Status(15)         AS STRING * 12
+    DIM Ndm(12)            AS INTEGER
+    DIM aSer(8)            AS STRING * 10
+    DIM aLon(8)            AS STRING * 10
+    
+   'master files variables
+   '----------------------
+    COMMON SHARED Cod      AS Codes      '01
+    COMMON SHARED Cmb      AS Combos     '02
+    COMMON SHARED Prc      AS Prices     '03
+    COMMON SHARED Rat      AS Rates      '04
+    COMMON SHARED Pas      AS PassWord   '05
+    COMMON SHARED Sto      AS Stores     '06
+    COMMON SHARED Ctr      AS Centers    '07
+    COMMON SHARED Inv      AS Inventory  '10
+    COMMON SHARED Cus      AS Customer   '10
+    COMMON SHARED Agr      AS Agreement  '10
+    COMMON SHARED Rct      AS Receipts   '10
+
+    COMMON SHARED Status() AS STRING * 12                                     '
+    
+    'common variables
+   '----------------
+    COMMON SHARED LineNum  AS INTEGER
+    COMMON SHARED PageNum  AS INTEGER
+    COMMON SHARED Yes      AS INTEGER
+    COMMON SHARED aDat     AS STRING * 10
+    COMMON SHARED aSto     AS STRING * 2
+    COMMON SHARED aAct     AS STRING * 2
+    COMMON SHARED aIni     AS STRING * 3
+    COMMON SHARED aAgr     AS STRING * 6
+    COMMON SHARED aSer()   AS STRING * 10
+    COMMON SHARED aLon()   AS STRING * 10
+
+   'load inventory status descriptions
+   '----------------------------------
+    Status(0) = "Idle        "
+    Status(1) = "In-Service  "
+   
+    Status(2) = "On-Rent     "
+    Status(3) = "On-Rent/AS  " 'awaiting service
+    Status(4) = "On-Rent/IS  " 'in service
+    Status(5) = "On-Rent/AR  " 'awaiting return
+    Status(6) = "On-Rent/IC  " 'insurance claim
+    Status(7) = "On-Rent/L   " 'legal
+   
+    Status(8) = "Loaner      "
+    Status(9) = "Cash-Sale   "
+   Status(10) = "Paid-Out    "
+    
+   Status(11) = "Charge-Off  " 'skip or stolen
+   Status(12) = "Charge-Off/L" 'legal
+   Status(13) = "Charge-Off/S" 'scrap
+   Status(14) = "Charge-Off/G" 'giveaway
+   Status(15) = "Transferred " 'transferred
+   
+   'define constant variables
+   '---------------------------------
+    CONST DaysAvg = 30.4167
+    Ndm(1) = 31
+    Ndm(2) = 28
+    Ndm(3) = 31
+    Ndm(4) = 30
+    Ndm(5) = 31
+    Ndm(6) = 30
+    Ndm(7) = 31
+    Ndm(8) = 31
+    Ndm(9) = 30
+    Ndm(10) = 31
+    Ndm(11) = 30
+    Ndm(12) = 31
+
