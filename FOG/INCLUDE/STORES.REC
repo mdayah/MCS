@@ -1,0 +1,23 @@
+TYPE Stores
+     Num AS STRING * 2      'store number
+     Div AS STRING * 1      'division
+     Nam AS STRING * 26     'store name
+     Add AS STRING * 26     'address
+     Str AS STRING * 26     'street
+     Cty AS STRING * 17     'city
+     Sta AS STRING * 2      'state
+     Zip AS STRING * 5      'zip code
+     Cod AS STRING * 3      '***************
+     AAA AS STRING * 1      'company code
+     Tel AS STRING * 12     'voice phone
+     BBB AS STRING * 4      '***************
+     Pho AS STRING * 12     'data phone
+     Opn AS STRING * 10     'openning date
+     Man AS STRING * 16     'manager
+     Acc AS STRING * 16     'account manager
+     Acm AS STRING * 16     'account manager
+     Sec AS STRING * 16     'secratery
+     Stx AS STRING * 5      'sales tax
+     CCC AS STRING * 16     '***************
+     END TYPE
+
