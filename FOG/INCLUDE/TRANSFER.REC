@@ -1,0 +1,6 @@
+TYPE Transfer
+     Dat AS STRING * 10
+     Sto AS STRING * 2
+     Rec AS STRING * 293
+     END TYPE
+
