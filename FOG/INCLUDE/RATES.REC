@@ -1,0 +1,9 @@
+TYPE Rates
+     Num AS STRING * 3
+     Del AS STRING * 1
+     Mtr(1 TO 3) AS STRING * 3
+     Mrt(1 TO 3) AS STRING * 6
+     Wtr(1 TO 3) AS STRING * 3
+     Wrt(1 TO 3) AS STRING * 6
+     END TYPE
+
