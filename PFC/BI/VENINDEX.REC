@@ -1,0 +1,6 @@
+
+TYPE VenIndex
+     Ven AS STRING * 28
+     Num AS INTEGER
+END TYPE
+

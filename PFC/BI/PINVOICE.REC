@@ -1,0 +1,15 @@
+TYPE Invoices
+   Ven AS STRING * 3
+   Ref AS STRING * 10
+   Bdt AS STRING * 10
+   Ddt AS STRING * 10
+   Pdt AS STRING * 10
+   Chk AS STRING * 10
+   Grs AS STRING * 8
+   Dis AS STRING * 8
+   Crd AS STRING * 8
+   Net AS STRING * 8
+   Dst AS STRING * 100
+   Pur AS STRING * 5
+END TYPE
+
