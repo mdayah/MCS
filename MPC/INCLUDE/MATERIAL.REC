@@ -1,0 +1,30 @@
+TYPE Material
+    Num AS STRING * 3   'item number
+    Typ AS STRING * 3   'department
+    Nam AS STRING * 26  'description
+    Fra AS STRING * 4   'fraction
+    Mes AS STRING * 2   'measure
+    Con AS STRING * 2   'container
+    Rpt AS STRING * 5   'reorder point
+    Rqt AS STRING * 5   'reorder quantity
+    Ref AS STRING * 7   'reference price
+    Cnt AS STRING * 8   'physical count
+    Prc AS STRING * 8   'refernce price
+    Fil AS STRING * 14  'filler
+    Mbq AS LONG: Mbp AS LONG: Ybq AS LONG: Ybp AS LONG 'Beg Baclance
+    Mpq AS LONG: Mpp AS LONG: Ypq AS LONG: Ypp AS LONG 'Purchases
+    Mmq AS LONG: Mmp AS LONG: Ymq AS LONG: Ymp AS LONG 'Production
+    Mkq AS LONG: Mkp AS LONG: Ykq AS LONG: Ykp AS LONG 'Requisitions
+    Msq AS LONG: Msc AS LONG: Ysq AS LONG: Ysc AS LONG 'Cost of Sales
+    Mwq AS LONG: Mwp AS LONG: Ywq AS LONG: Ywp AS LONG 'Spoilage
+    Ygq AS LONG: Ygp AS LONG                           'Gains or Loss
+    Msp AS LONG: Ysp AS LONG                           'Sales
+END TYPE
+
+TYPE MatIndex
+     Typ AS STRING * 3
+     Nam AS STRING * 26
+     Num AS INTEGER
+END TYPE
+
+
