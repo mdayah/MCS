@@ -1,0 +1,14 @@
+   'load configuration parameters
+   '----------------------------------
+    OPEN "..\DataFile\Config.Mas" FOR INPUT AS #1
+    INPUT #1, StoNum  'Store number
+    INPUT #1, AgrNum  'Agreement Number
+    INPUT #1, RctNum  'Receipt Number
+    INPUT #1, RptDay  'Recap report day
+    INPUT #1, EndBak  'Last backup        date
+    INPUT #1, EndDay  'Last day   closing date
+    INPUT #1, EndWek  'Last week  closing date
+    INPUT #1, EndMon  'Last month closing date
+    INPUT #1, EndYer  'Last year  closing date
+    CLOSE
+
