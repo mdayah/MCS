@@ -1,0 +1,13 @@
+TYPE SalIndex
+     Typ AS STRING * 2
+     Itm AS STRING * 3
+     Cus AS STRING * 3
+     Dat AS STRING * 10
+     Qty AS STRING * 7
+     Qts AS STRING * 7
+     Wts AS STRING * 8
+     Cst AS STRING * 8
+     Prc AS STRING * 8
+     Num AS INTEGER
+END TYPE
+
