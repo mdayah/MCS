@@ -1,0 +1,7 @@
+TYPE Purchase
+    Inv AS LONG
+    Itm(20) AS STRING * 3
+    Qty(20) AS STRING * 8
+    Amt(20) AS STRING * 8
+END TYPE
+
