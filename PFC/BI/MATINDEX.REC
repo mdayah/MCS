@@ -1,0 +1,6 @@
+TYPE MatIndex
+     Typ AS STRING * 2
+     Nam AS STRING * 32
+     Num AS INTEGER
+END TYPE
+
