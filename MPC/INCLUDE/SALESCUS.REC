@@ -1,0 +1,8 @@
+TYPE SalesCus
+     Cus AS STRING * 4
+     Typ AS STRING * 3
+     Itm AS STRING * 3
+     Qty AS STRING * 8
+     Dat AS STRING * 8
+END TYPE
+
