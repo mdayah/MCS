@@ -1,0 +1,6 @@
+[submodule "VBASIC"]
+	path = VBASIC
+	url = https://github.com/mdayah/VBASIC
+[submodule "LIB"]
+	path = LIB
+	url = https://github.com/mdayah/LIB
