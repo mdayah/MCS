@@ -1,0 +1,15 @@
+TYPE Prices
+     Cod AS STRING * 4    'code
+     Dis AS STRING * 10   'distributor
+     Mdl AS STRING * 10   'model number
+     Old AS STRING * 7    'old price
+     New AS STRING * 7    'new price
+     Dat AS STRING * 10   'date modified
+     Par AS STRING * 3    'warranty parts
+     Lab AS STRING * 3    'warranty labor
+     Del AS STRING * 1    'delete marker
+     Min AS STRING * 3    'minimum quantity
+     Max AS STRING * 3    'maximum quantity
+     Fil AS STRING * 9    'filler
+     END TYPE
+
