@@ -1,0 +1,78 @@
+TYPE Vendors
+     Num AS STRING * 4
+     Nam AS STRING * 28
+    '------------------Payment Address
+     Con AS STRING * 28
+     Add AS STRING * 28
+     Str AS STRING * 28
+     Cty AS STRING * 14
+     Sta AS STRING * 2
+     Zip AS STRING * 10
+     Tel AS STRING * 12
+     Fax AS STRING * 12
+    '------------------Company Address
+     Co1 AS STRING * 28
+     Ad1 AS STRING * 28
+     Sr1 AS STRING * 28
+     Ct1 AS STRING * 14
+     St1 AS STRING * 2
+     Zi1 AS STRING * 10
+     Te1 AS STRING * 12
+     Fa1 AS STRING * 12
+    '------------------Information
+     Pay AS STRING * 1
+     Dis AS STRING * 2
+     Trm AS STRING * 2
+     Act AS STRING * 12
+     Mbb AS LONG: Mgr AS LONG: Mds AS LONG: Mcr AS LONG: Mpd AS LONG
+     Ybb AS LONG: Ygr AS LONG: Yds AS LONG: Ycr AS LONG: Ypd AS LONG
+END TYPE
+TYPE VenIndex
+     Ven AS STRING * 28
+     Num AS INTEGER
+END TYPE
+TYPE Invoices
+     Num AS LONG
+     Ven AS STRING * 4
+     Ref AS STRING * 10
+     Bdt AS STRING * 10
+     Ddt AS STRING * 10
+     Pdt AS STRING * 10
+     Chk AS STRING * 10
+     Grs AS STRING * 8
+     Dis AS STRING * 8
+     Crd AS STRING * 8
+     Net AS STRING * 8
+     Sto(25) AS STRING * 2
+     Act(25) AS STRING * 2
+     Amt(25) AS STRING * 8
+     Pur AS INTEGER
+END TYPE
+TYPE InvIndex
+     Inv AS LONG
+     Ven AS INTEGER
+     Ddt AS LONG
+     Num AS INTEGER
+END TYPE
+TYPE InvStore
+     Sto AS STRING * 2
+     Ven AS INTEGER
+     Bdt AS LONG
+     Act AS STRING * 2
+     Amt AS STRING * 8
+     Num AS INTEGER
+END TYPE
+TYPE Checks
+     Num AS STRING * 8
+     Dat AS STRING * 10
+     Ven AS STRING * 4
+     Inv(11) AS LONG
+     Amt AS STRING * 8
+     Sta AS STRING * 4
+END TYPE
+TYPE ChkIndex
+     Ven AS INTEGER
+     Dat AS LONG
+     Num AS INTEGER
+END TYPE
+
