@@ -1,0 +1,47 @@
+TYPE Customer
+     Cod AS STRING * 4
+     Nam AS STRING * 28
+    
+     Man AS STRING * 28       'billing address
+     Tel AS STRING * 14
+     Add AS STRING * 28
+     Str AS STRING * 28
+     Cty AS STRING * 14
+     Sta AS STRING * 2
+     Zip AS STRING * 10
+    
+     Sco AS STRING * 28       'shipping address
+     Ste AS STRING * 14
+     Sad AS STRING * 28
+     SSr AS STRING * 28
+     SCt AS STRING * 14
+     SSt AS STRING * 2
+     SZi AS STRING * 10
+
+     Typ AS STRING * 1        'credit information
+     Dat AS STRING * 10
+     Ban AS STRING * 28
+     Acc AS STRING * 15
+     Tax AS STRING * 15
+     Dis AS STRING * 2
+     Ter AS STRING * 2
+     Pay AS STRING * 1        'cash=C credit=R
+     Fil AS STRING * 29
+    
+     Crd AS LONG: Chg AS LONG 'credit & service charge
+     Mbb AS LONG: Ybb AS LONG 'begining balance
+     Mgr AS LONG: Ygr AS LONG 'gross sales
+     Mcr AS LONG: Ycr AS LONG 'credits
+     Mtx AS LONG: Ytx AS LONG 'sales tax
+     Mfr AS LONG: Yfr AS LONG 'freight charge
+     Mnt AS LONG: Ynt AS LONG 'net amount
+     Mpd AS LONG: Ypd AS LONG 'receipts
+     Mco AS LONG: Yco AS LONG 'cost of goods
+END TYPE
+
+TYPE CusIndex
+     Cod AS STRING * 4
+     Nam AS STRING * 28
+     Num AS INTEGER
+END TYPE
+

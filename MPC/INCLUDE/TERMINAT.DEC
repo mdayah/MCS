@@ -1,0 +1,12 @@
+    CLOSE : OPEN "..\Data\Config.MAS" FOR OUTPUT AS #1
+    WRITE #1, ComCode
+    WRITE #1, Company
+    WRITE #1, Street
+    WRITE #1, Address
+    WRITE #1, City
+    WRITE #1, Payroll
+    WRITE #1, TaxID
+    WRITE #1, EmpID
+    WRITE #1, LastOrder
+    CLOSE
+

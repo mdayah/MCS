@@ -1,0 +1,26 @@
+TYPE Invoices
+    Num AS STRING * 8
+    Cus AS STRING * 4
+    Ref AS STRING * 9
+    Man AS STRING * 1
+    Bdt AS STRING * 10
+    Ddt AS STRING * 10
+    Pdt AS STRING * 10
+    Chk AS STRING * 10
+    Pmt AS STRING * 8
+    Grs AS STRING * 8
+    Crd AS STRING * 8
+    Tax AS STRING * 8
+    Frt AS STRING * 8
+    Net AS STRING * 8
+    Dst AS STRING * 405
+END TYPE
+
+TYPE InvIndex
+   Cus AS STRING * 4
+   Man AS STRING * 1
+   Inv AS LONG
+   Dat AS STRING * 6
+   Mrk AS STRING * 1
+   Num AS INTEGER
+END TYPE
