@@ -1,0 +1,45 @@
+DECLARE FUNCTION Confirm% (f$)
+DECLARE FUNCTION Response (f$)
+DECLARE FUNCTION FJulian$ (d&)
+DECLARE FUNCTION TJulian& (d$)
+DECLARE FUNCTION DayWeek$ (d$)
+DECLARE FUNCTION DateDif& (d$, t$)
+DECLARE FUNCTION DayMath$ (d$, d%)
+DECLARE FUNCTION MonMath$ (d$, d%)
+
+DECLARE SUB Heading ()
+DECLARE SUB StatLin (f$)
+DECLARE SUB WinMssg (f$)
+DECLARE SUB KeyPres (f$)
+DECLARE SUB Printing (c%, s%)
+DECLARE SUB Picture (r%, c%, s%, f$)
+DECLARE SUB EntryX (r%, c%, e%, b%, f$)
+DECLARE SUB EntryT (r%, c%, e%, b%, f$)
+DECLARE SUB EntryD (r%, c%, e%, b%, f$)
+DECLARE SUB EntryU (r%, c%, s%, e%, b%, f$)
+DECLARE SUB EntryS (r%, c%, s%, e%, b%, f$)
+DECLARE SUB EntryN (r%, c%, s%, d%, e%, b%, f$)
+
+DECLARE FUNCTION PrinterReady (BYVAL r)
+DECLARE SUB PrtSc (BYVAL e)
+DECLARE SUB qPrint (s$, BYVAL r, BYVAL c, BYVAL p, BYVAL f)
+DECLARE SUB FileCount (f$, BYVAL a, c, e)
+DECLARE SUB LoadDir (f$, BYVAL a, BYVAL s, BYVAL o, e)
+   
+   'common variables
+   '----------------
+    DIM ErrS(5)            AS INTEGER
+    COMMON SHARED LineNum  AS INTEGER
+    COMMON SHARED PageNum  AS INTEGER
+    COMMON SHARED ErrS()   AS INTEGER
+
+    COMMON SHARED ComCode  AS STRING * 7
+    COMMON SHARED Company  AS STRING * 30
+    COMMON SHARED Street   AS STRING * 30
+    COMMON SHARED Address  AS STRING * 30
+    COMMON SHARED City     AS STRING * 30
+    COMMON SHARED Payroll  AS STRING * 1
+    COMMON SHARED TaxID    AS STRING * 10
+    COMMON SHARED EmpID    AS STRING * 7
+
+
