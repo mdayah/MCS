@@ -1,0 +1,27 @@
+TYPE Material
+    Num AS STRING * 3   'item number
+    Typ AS STRING * 4   'department
+    Nam AS STRING * 26  'description
+    Fra AS STRING * 8   'not used
+    Rpt AS STRING * 5   'reorder point
+    Rqt AS STRING * 5   'reorder quantity
+    Ref AS STRING * 7   'reference price
+    Cnt AS STRING * 8   'physical count
+    Prc AS STRING * 7   'refernce price
+    Mbq AS LONG: Mbp AS LONG: Ybq AS LONG: Ybp AS LONG 'Beg Balance
+    Mpq AS LONG: Mpp AS LONG: Ypq AS LONG: Ypp AS LONG 'Purchases
+    Msq AS LONG: Msc AS LONG: Ysq AS LONG: Ysc AS LONG 'Cost of Sales
+    Meq AS LONG: Mep AS LONG: Yeq AS LONG: Yep AS LONG 'Extingueshed
+    Muq AS LONG: Mup AS LONG: Yuq AS LONG: Yup AS LONG 'Unrecoverable
+    Mrq AS LONG: Mrp AS LONG: Yrq AS LONG: Yrp AS LONG 'Rentals
+    Mdq AS LONG: Mdp AS LONG: Ydq AS LONG: Ydp AS LONG 'Depreciation
+    Ygq AS LONG: Ygp AS LONG                           'Gains or Loss
+    Msp AS LONG: Ysp AS LONG                           'Sales
+END TYPE
+
+TYPE MatIndex
+     Typ AS STRING * 4
+     Nam AS STRING * 26
+     Num AS INTEGER
+END TYPE
+
