@@ -1,0 +1,48 @@
+'Customer Index
+TYPE Customer
+     Sto AS STRING * 2          'Store number
+     Num AS STRING * 4          'Customer number
+     Sal AS STRING * 10         'Salutation
+     Nam AS STRING * 26         'Name
+     Add AS STRING * 26         'Address
+     Str AS STRING * 26         'Street
+     Cty AS STRING * 17         'City
+     Sta AS STRING * 2          'State
+     Zip AS STRING * 5          'Zip code
+     Tel AS STRING * 12         'Telephone
+     Rmk AS STRING * 36         'Remarks
+
+     SSn AS STRING * 11         'Social Sec
+     Dln AS STRING * 11         'Driver license
+     Dob AS STRING * 10         'Date of birth
+     Mar AS STRING * 1          'Marital status
+     Rac AS STRING * 1          'Race
+     Sex AS STRING * 1          'Sex
+
+     Emp AS STRING * 15         'Employer
+     Wor AS STRING * 12         'Work phone
+     Lon AS STRING * 15         '
+     Inc AS STRING * 15         '
+     Oth AS STRING * 15         '
+    
+     Dis AS STRING * 3          'Distance
+     Ref AS STRING * 1          'Refferal code
+     Typ AS STRING * 1          'Type
+     Del AS STRING * 1          'Delete
+     
+     Nm1 AS STRING * 26         'Second name
+    
+     SS1 AS STRING * 11         'Social Sec
+     Dl1 AS STRING * 11         'Driver License
+     Bd1 AS STRING * 10         'Date of birth
+     St1 AS STRING * 1          'Marital status
+     Rc1 AS STRING * 1          'Race
+     Sx1 AS STRING * 1          'Sex
+     
+     Em1 AS STRING * 15
+     Wt1 AS STRING * 12
+     Ln1 AS STRING * 15
+     In1 AS STRING * 15
+     Ot1 AS STRING * 15
+     END TYPE
+

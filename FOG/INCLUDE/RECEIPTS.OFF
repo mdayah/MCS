@@ -1,0 +1,29 @@
+'Receipts index
+TYPE Receipts
+     Sto AS STRING * 2      'Store number
+     Cus AS STRING * 4      'Customer number
+     Agr AS STRING * 6      'Agreement number
+     Num AS STRING * 6      'Receipt number
+     Mgr AS STRING * 3      'Manager
+     Mrk AS STRING * 1      'Bad check marker
+     Cod AS STRING * 2      'Payment Code
+     Sta AS STRING * 1      'Receipt Status
+     Chk AS STRING * 10     'Check number
+     Dat AS STRING * 10     'Receipt Date
+     Ddt AS STRING * 10     'Due Date
+     Nxt AS STRING * 10     'Next due date
+     Rnt AS STRING * 7      'Rent
+     Dis AS STRING * 7      'Discount
+     Tax AS STRING * 7      'Sales Tax
+     Lat AS STRING * 7      'Late Charge
+     Trp AS STRING * 7      'Trip Charge
+     Oth AS STRING * 7      'Other Charges
+     Wav AS STRING * 7      'Wavier
+     Ref AS STRING * 7      'Referral
+     Crd AS STRING * 7      'Debit/Credit
+     Due AS STRING * 7      'Amount Due
+     Amt AS STRING * 7      'Amount Paid
+     Typ AS STRING * 5      'Months & Weeks
+     Day AS STRING * 5      '  and Days
+END TYPE
+

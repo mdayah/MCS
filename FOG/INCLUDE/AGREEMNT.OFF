@@ -1,0 +1,54 @@
+'Agreement index
+TYPE Agreement
+     Sto AS STRING * 2                       'Store number
+     Num AS STRING * 6                       'Agreement Number
+     Dat AS STRING * 10                      'Agreement Date
+     Mgr AS STRING * 4                       'Manager password
+     Rte AS STRING * 1                       'Route
+     Cus AS STRING * 4                       'Customer Number
+
+     Cmb AS STRING * 4                       'Combo code
+     Cod AS STRING * 4                       'Single Cod
+     Due AS STRING * 10                      'First due date
+     Nxt AS STRING * 10                      'Next due date
+     Pod AS STRING * 10                      'Payout date
+     Dta AS STRING * 10                      'Last activity
+     Sta AS STRING * 1                       'Agreement status
+     Frq AS STRING * 1                       'Payment Frequency
+     Lat AS STRING * 5                       'Late Fees
+     Trp AS STRING * 5                       'Trip Charges
+     Dlv AS STRING * 5                       'Delivery charge
+     Ref AS STRING * 6                       'Ref to agreement
+     Pay AS STRING * 7                       'Initial payment
+     Act AS STRING * 2                       'Type of activity
+     Wav AS STRING * 1                       'Wavier, Y or N
+     
+     Mst AS STRING * 3: Msr AS STRING * 6    'Standared Monthly term & rate
+     Wst AS STRING * 3: Wsr AS STRING * 6    'Standared Weekly term & rate
+     Mtr AS STRING * 3: Mrt AS STRING * 6    'Modified Monthly term & rate
+     Wtr AS STRING * 3: Wrt AS STRING * 6    'Modified Weekly term & rate
+     
+     Una AS LONG                             'Unapplied
+     Npd AS INTEGER                          'Days paid
+     Npw AS INTEGER                          'Weeks paid
+     Npm AS INTEGER                          'Months paid
+     Rct AS INTEGER                          'Number of receipts
+     Ndl AS INTEGER                          'Number of days late
+     Eza AS INTEGER                          'Number of EZA days
+     Fre AS INTEGER                          'Number of FREE days
+   
+     Mri AS LONG: Yri AS LONG: Tri AS LONG   'Rental income
+     Mds AS LONG: Yds AS LONG: Tds AS LONG   'Discount
+     Mtx AS LONG: Ytx AS LONG: Ttx AS LONG   'Sales tax
+     Mlc AS LONG: Ylc AS LONG: Tlc AS LONG   'Late charge
+     Mtc AS LONG: Ytc AS LONG: Ttc AS LONG   'Trip charge
+     Mot AS LONG: Yot AS LONG: Tot AS LONG   'Other charges
+     Min AS LONG: Yin AS LONG: Tin AS LONG   'Wavier
+     Mrf AS LONG: Yrf AS LONG: Trf AS LONG   'Refferal
+    
+     It1 AS STRING * 10: Lo1 AS STRING * 10: Ds1 AS INTEGER: Fm1 AS LONG
+     It2 AS STRING * 10: Lo2 AS STRING * 10: Ds2 AS INTEGER: Fm2 AS LONG
+     It3 AS STRING * 10: Lo3 AS STRING * 10: Ds3 AS INTEGER: Fm3 AS LONG
+     It4 AS STRING * 10: Lo4 AS STRING * 10: Ds4 AS INTEGER: Fm4 AS LONG
+     END TYPE
+
