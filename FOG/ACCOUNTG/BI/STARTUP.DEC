@@ -1,0 +1,12 @@
+    CLOSE : OPEN "Config.MAS" FOR INPUT AS #1
+    INPUT #1, ComCode
+    INPUT #1, Company
+    INPUT #1, Street
+    INPUT #1, Address
+    INPUT #1, City
+    INPUT #1, Payroll
+    INPUT #1, TaxID
+    INPUT #1, EmpID
+    INPUT #1, Path
+    CLOSE
+
