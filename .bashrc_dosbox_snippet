@@ -1,0 +1,2 @@
+# Add DOSBox-X to PATH (Windows native executable via WSL2)
+export PATH="/mnt/c/DOSBox-X:$PATH"

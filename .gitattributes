@@ -1,0 +1,5 @@
+# This is a preserved MS-DOS software archive. Never convert line endings:
+# DOS text files (source, config, report layouts) use CRLF, and altering the
+# bytes breaks the programs (VBDOS INPUT# fails on LF-only files). Binary data
+# and executables must also pass through untouched.
+* -text

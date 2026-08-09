@@ -1,0 +1,160 @@
+Processing files for date: 1988-07-05
+git add "./GL/GLS.BAS"
+git add "./GL/SCREEN.JRN"
+git add "./GL/SCREEN.ACC"
+git add "./GL/SCREEN.MNU"
+GIT_COMMITTER_DATE="1988-07-05 12:00:00" git commit --date="1988-07-05 12:00:00" -m "Added files for 1988-07-05"
+Processing files for date: 1989-08-21
+git add "./BI/ACCOUNTS.REC"
+git add "./BI/EMPLOYEE.REC"
+git add "./BI/EMPINDEX.REC"
+GIT_COMMITTER_DATE="1989-08-21 12:00:00" git commit --date="1989-08-21 12:00:00" -m "Added files for 1989-08-21"
+Processing files for date: 1989-08-27
+git add "./BI/PINVINDX.REC"
+GIT_COMMITTER_DATE="1989-08-27 12:00:00" git commit --date="1989-08-27 12:00:00" -m "Added files for 1989-08-27"
+Processing files for date: 1990-05-24
+git add "./FS/SCREEN.MNU"
+git add "./FS/FSS.BAS"
+GIT_COMMITTER_DATE="1990-05-24 12:00:00" git commit --date="1990-05-24 12:00:00" -m "Added files for 1990-05-24"
+Processing files for date: 1990-06-20
+git add "./BI/VENDORS.REC"
+GIT_COMMITTER_DATE="1990-06-20 12:00:00" git commit --date="1990-06-20 12:00:00" -m "Added files for 1990-06-20"
+Processing files for date: 1990-07-02
+git add "./TS/PRS.BAS"
+GIT_COMMITTER_DATE="1990-07-02 12:00:00" git commit --date="1990-07-02 12:00:00" -m "Added files for 1990-07-02"
+Processing files for date: 1990-09-20
+git add "./BI/TIMECARD.REC"
+GIT_COMMITTER_DATE="1990-09-20 12:00:00" git commit --date="1990-09-20 12:00:00" -m "Added files for 1990-09-20"
+Processing files for date: 1990-09-28
+git add "./PR/PRS.SLB"
+GIT_COMMITTER_DATE="1990-09-28 12:00:00" git commit --date="1990-09-28 12:00:00" -m "Added files for 1990-09-28"
+Processing files for date: 1990-10-02
+git add "./BI/PROINDEX.REC"
+git add "./BI/MATINDEX.REC"
+GIT_COMMITTER_DATE="1990-10-02 12:00:00" git commit --date="1990-10-02 12:00:00" -m "Added files for 1990-10-02"
+Processing files for date: 1990-10-03
+git add "./BI/PURCHASE.REC"
+GIT_COMMITTER_DATE="1990-10-03 12:00:00" git commit --date="1990-10-03 12:00:00" -m "Added files for 1990-10-03"
+Processing files for date: 1990-10-07
+git add "./BI/CUSINDEX.REC"
+GIT_COMMITTER_DATE="1990-10-07 12:00:00" git commit --date="1990-10-07 12:00:00" -m "Added files for 1990-10-07"
+Processing files for date: 1990-10-08
+git add "./BI/ORDINDEX.REC"
+GIT_COMMITTER_DATE="1990-10-08 12:00:00" git commit --date="1990-10-08 12:00:00" -m "Added files for 1990-10-08"
+Processing files for date: 1990-10-14
+git add "./BI/INVOICES.REC"
+GIT_COMMITTER_DATE="1990-10-14 12:00:00" git commit --date="1990-10-14 12:00:00" -m "Added files for 1990-10-14"
+Processing files for date: 1990-10-15
+git add "./BI/INVINDEX.REC"
+GIT_COMMITTER_DATE="1990-10-15 12:00:00" git commit --date="1990-10-15 12:00:00" -m "Added files for 1990-10-15"
+Processing files for date: 1990-12-09
+git add "./BI/LIBRARY.DEC"
+GIT_COMMITTER_DATE="1990-12-09 12:00:00" git commit --date="1990-12-09 12:00:00" -m "Added files for 1990-12-09"
+Processing files for date: 1990-12-10
+git add "./BI/RECEIPTS.REC"
+git add "./BI/ORDERS.REC"
+GIT_COMMITTER_DATE="1990-12-10 12:00:00" git commit --date="1990-12-10 12:00:00" -m "Added files for 1990-12-10"
+Processing files for date: 1990-12-12
+git add "./BI/SALINDEX.REC"
+GIT_COMMITTER_DATE="1990-12-12 12:00:00" git commit --date="1990-12-12 12:00:00" -m "Added files for 1990-12-12"
+Processing files for date: 1991-01-25
+git add "./BI/RECIPES.REC"
+git add "./BI/JOBCOST.REC"
+GIT_COMMITTER_DATE="1991-01-25 12:00:00" git commit --date="1991-01-25 12:00:00" -m "Added files for 1991-01-25"
+Processing files for date: 1991-08-09
+git add "./BI/OPNINDEX.REC"
+GIT_COMMITTER_DATE="1991-08-09 12:00:00" git commit --date="1991-08-09 12:00:00" -m "Added files for 1991-08-09"
+Processing files for date: 1991-08-29
+git add "./OE/OES.SLB"
+GIT_COMMITTER_DATE="1991-08-29 12:00:00" git commit --date="1991-08-29 12:00:00" -m "Added files for 1991-08-29"
+Processing files for date: 1992-01-02
+git add "./FS/INCOME.PIC"
+git add "./FS/SHEET.PIC"
+GIT_COMMITTER_DATE="1992-01-02 12:00:00" git commit --date="1992-01-02 12:00:00" -m "Added files for 1992-01-02"
+Processing files for date: 1992-06-08
+git add "./BI/PRODUCTS.REC"
+git add "./BI/MATERIAL.REC"
+GIT_COMMITTER_DATE="1992-06-08 12:00:00" git commit --date="1992-06-08 12:00:00" -m "Added files for 1992-06-08"
+Processing files for date: 1992-06-10
+git add "./BI/CUSTOMER.REC"
+GIT_COMMITTER_DATE="1992-06-10 12:00:00" git commit --date="1992-06-10 12:00:00" -m "Added files for 1992-06-10"
+Processing files for date: 1992-06-11
+git add "./AP/AP.SLB"
+git add "./IN/INS.SLB"
+git add "./AR/POST.BAS"
+git add "./AR/ARS.SLB"
+GIT_COMMITTER_DATE="1992-06-11 12:00:00" git commit --date="1992-06-11 12:00:00" -m "Added files for 1992-06-11"
+Processing files for date: 1992-10-04
+git add "./TS/PRP.BAS"
+GIT_COMMITTER_DATE="1992-10-04 12:00:00" git commit --date="1992-10-04 12:00:00" -m "Added files for 1992-10-04"
+Processing files for date: 1993-02-04
+git add "./BI/VENINDEX.REC"
+git add "./BI/PINVOICE.REC"
+GIT_COMMITTER_DATE="1993-02-04 12:00:00" git commit --date="1993-02-04 12:00:00" -m "Added files for 1993-02-04"
+Processing files for date: 1993-02-05
+git add "./AP/AP.BAS"
+GIT_COMMITTER_DATE="1993-02-05 12:00:00" git commit --date="1993-02-05 12:00:00" -m "Added files for 1993-02-05"
+Processing files for date: 1994-01-08
+git add "./AR/ARC.BAS"
+git add "./AR/ARP.BAS"
+GIT_COMMITTER_DATE="1994-01-08 12:00:00" git commit --date="1994-01-08 12:00:00" -m "Added files for 1994-01-08"
+Processing files for date: 1995-01-12
+git add "./PR/PRP.EXE"
+git add "./PR/PRP.BAS"
+GIT_COMMITTER_DATE="1995-01-12 12:00:00" git commit --date="1995-01-12 12:00:00" -m "Added files for 1995-01-12"
+Processing files for date: 1998-10-25
+git add "./GL/JOURNAL.NUM"
+git add "./GL/GLP.EXE"
+git add "./GL/JOURNAL.MAS"
+git add "./GL/GLP.BAS"
+git add "./FS/FSP.EXE"
+git add "./FS/FSP.BAS"
+git add "./AP/INVOICES.NUM"
+git add "./AP/INVOICES.DUE"
+git add "./AP/INVOICES.VEN"
+git add "./AP/INVOICES.MAS"
+git add "./AP/AP.EXE"
+git add "./AP/ACCOUNTS.DTA"
+git add "./AP/INDEX.HWC"
+git add "./AP/VENDORS.MAS"
+git add "./AP/VENDORS.NAM"
+git add "./AP/VENDORS.INX"
+git add "./AP/INVOICES.INX"
+git add "./OE/ORDERS.MAS"
+git add "./OE/ORDERS.OPN"
+git add "./OE/ORDERS.CUS"
+git add "./OE/ORDERS.INX"
+git add "./OE/OEP.MAK"
+git add "./OE/ORDERS.NUM"
+git add "./OE/OEP.BAS"
+git add "./OE/OEP.EXE"
+git add "./IN/INVENTOR.PUR"
+git add "./IN/RECIPES.MAS"
+git add "./IN/INJ.EXE"
+git add "./IN/INVENTOR.JOB"
+git add "./IN/PUP.BAS"
+git add "./IN/MATERIAL.MAS"
+git add "./IN/PRODUCTS.INX"
+git add "./IN/INP.BAS"
+git add "./IN/PUP.EXE"
+git add "./IN/INM.BAS"
+git add "./IN/PRODUCTS.MAS"
+git add "./IN/INJ.MAK"
+git add "./IN/INVENTOR.NUM"
+git add "./IN/PUP.MAK"
+git add "./IN/INJ.BAS"
+git add "./IN/MATERIAL.INX"
+git add "./AR/ARP.EXE"
+git add "./AR/INVOICES.SAL"
+git add "./AR/CUSTOMER.MAS"
+git add "./AR/RECEIPTS.NUM"
+git add "./AR/RECEIPTS.MAS"
+git add "./AR/CUSTOMER.INX"
+git add "./AR/ARP.MAK"
+GIT_COMMITTER_DATE="1998-10-25 12:00:00" git commit --date="1998-10-25 12:00:00" -m "Added files for 1998-10-25"
+Processing files for date: 1999-06-21
+git add "./PR/EMPLOYEE.INX"
+git add "./PR/EMPLOYEE.MAS"
+git add "./PR/TIMECARD.MAS"
+git add "./PR/EMPLOYEE.NAM"
+GIT_COMMITTER_DATE="1999-06-21 12:00:00" git commit --date="1999-06-21 12:00:00" -m "Added files for 1999-06-21"

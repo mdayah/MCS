@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preserving a programmer's DOS business systems</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='15'>💾</text></svg>">
+
+    <!-- Installs COOP/COEP headers so js-dos is cross-origin isolated on GitHub Pages
+         (harmless locally, where server.py already sends the headers). -->
+    <script src="coi-serviceworker.js"></script>
+    <link rel="stylesheet" href="https://v8.js-dos.com/latest/js-dos.css" crossorigin="anonymous">
+    <script src="https://v8.js-dos.com/latest/js-dos.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script>
+        if (window.mermaid) mermaid.initialize({
+            startOnLoad: true, securityLevel: 'loose', theme: 'base',
+            themeVariables: {
+                fontFamily: 'ui-monospace, Consolas, monospace', fontSize: '14px',
+                background: '#0a0c10', primaryColor: '#10141c',
+                primaryBorderColor: '#1d9e44', primaryTextColor: '#c7d0dd',
+                lineColor: '#4a5468', secondaryColor: '#16213e', tertiaryColor: '#0a0c10'
+            }
+        });
+    </script>
+    <style>
+        * { box-sizing: border-box; }
+        :root {
+            --bg: #0a0c10;
+            --panel: #10141c;
+            --line: #232a38;
+            --green: #33ff66;
+            --green-dim: #1d9e44;
+            --amber: #ffb000;
+            --cyan: #4dd8e6;
+            --text: #c7d0dd;
+            --muted: #7c8798;
+        }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Georgia, 'Times New Roman', serif;
+            line-height: 1.6;
+        }
+        code, pre, .mono { font-family: ui-monospace, 'Cascadia Mono', Consolas, 'Courier New', monospace; }
+
+        /* ================= HERO ================= */
+        .hero {
+            position: relative;
+            padding: 72px 20px 56px;
+            text-align: center;
+            background:
+                radial-gradient(ellipse at 50% -20%, #16321e 0%, transparent 60%),
+                var(--bg);
+            border-bottom: 1px solid var(--line);
+            overflow: hidden;
+        }
+        /* CRT scanlines */
+        .hero::after {
+            content: "";
+            position: absolute; inset: 0;
+            background: repeating-linear-gradient(
+                to bottom, transparent 0 2px, rgba(0,0,0,.18) 2px 4px);
+            pointer-events: none;
+        }
+        .hero .boot {
+            color: var(--green-dim);
+            font-size: 13px;
+            letter-spacing: .08em;
+            margin-bottom: 28px;
+        }
+        .hero h1 {
+            margin: 0 0 14px; max-width: 900px; margin-left: auto; margin-right: auto;
+            font-size: clamp(21px, 3.4vw, 34px); line-height: 1.35;
+            font-weight: normal;
+            color: var(--green);
+            text-shadow: 0 0 18px rgba(51,255,102,.35);
+            letter-spacing: .02em;
+        }
+        .hero h1 .cursor {
+            display: inline-block; width: .55em; height: 1.05em;
+            background: var(--green); vertical-align: text-bottom;
+            animation: blink 1.06s steps(1) infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        .hero .sub {
+            color: var(--text);
+            font-size: clamp(15px, 2.2vw, 19px);
+            max-width: 720px; margin: 14px auto 0;
+        }
+        .hero .sub em { color: var(--amber); font-style: normal; }
+        .statband {
+            display: flex; flex-wrap: wrap; justify-content: center;
+            gap: 0; margin: 40px auto 0; max-width: 900px;
+            border: 1px solid var(--line); background: rgba(0,0,0,.35);
+        }
+        .stat {
+            flex: 1 1 150px; padding: 16px 10px;
+            border-right: 1px solid var(--line);
+        }
+        .stat:last-child { border-right: none; }
+        .stat b { display: block; font-size: 26px; color: var(--amber); font-weight: normal; }
+        .stat span { font-size: 12px; color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+
+        /* ================= LAYOUT ================= */
+        .wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 56px 0 8px; }
+        h2 {
+            font-weight: normal; color: var(--green);
+            font-size: 15px; letter-spacing: .28em; text-transform: uppercase;
+            border-bottom: 1px solid var(--line); padding-bottom: 10px;
+        }
+        h2::before { content: "▌"; color: var(--amber); margin-right: 8px; }
+        .lede { font-size: 17px; max-width: 760px; }
+        .lede strong { color: #fff; font-weight: 600; }
+        p { color: var(--text); }
+        .note { color: var(--muted); font-size: 14px; }
+
+        /* ================= TIMELINE ================= */
+        .timeline { position: relative; margin: 36px 0; }
+        .timeline::before {
+            content: ""; position: absolute; left: 84px; top: 0; bottom: 0;
+            width: 2px; background: linear-gradient(var(--green-dim), var(--line));
+        }
+        .tl-row { position: relative; padding: 0 0 30px 120px; }
+        .tl-row .year {
+            position: absolute; left: 0; top: 0; width: 66px;
+            text-align: right; color: var(--amber); font-size: 18px;
+        }
+        .tl-row::before {
+            content: ""; position: absolute; left: 79px; top: 9px;
+            width: 12px; height: 12px; border-radius: 50%;
+            background: var(--bg); border: 2px solid var(--green);
+        }
+        .tl-row.world::before { border-color: var(--muted); }
+        .tl-row h3 { margin: 0 0 4px; font-size: 17px; font-weight: 600; color: #fff; }
+        .tl-row p { margin: 0; font-size: 15px; color: var(--text); }
+        .tl-row .vs {
+            margin-top: 8px; font-size: 13.5px; color: var(--muted);
+            border-left: 2px solid var(--line); padding-left: 10px;
+        }
+        .tl-row .vs b { color: var(--cyan); font-weight: 600; }
+
+        /* ================= ASCII DIAGRAM ================= */
+        .diagram {
+            background: #05070b; border: 1px solid var(--line);
+            border-radius: 4px; padding: 28px 14px; margin: 28px 0;
+            overflow-x: auto; text-align: center;
+        }
+        .diagram pre.mermaid { margin: 0; visibility: hidden; }
+        .diagram pre.mermaid[data-processed] { visibility: visible; }
+        /* let the rendered flowchart scale up to a comfortable size, centered */
+        .diagram .mermaid svg {
+            width: 100% !important; max-width: 560px; height: auto !important;
+            margin: 0 auto; display: block;
+        }
+        .diagram pre:not(.mermaid) {
+            margin: 0 auto; width: max-content;
+            font-size: 13px; line-height: 1.35; color: var(--green-dim);
+        }
+        .diagram .hd { color: var(--amber); }
+        .diagram .sys { color: var(--green); font-weight: bold; }
+        .diagram .dim { color: #3a4356; }
+        .diagram .lbl { color: var(--muted); }
+        .caption { text-align: center; color: var(--muted); font-size: 13px; margin-top: -14px; }
+
+        /* ================= COST TABLE ================= */
+        table.cost {
+            width: 100%; border-collapse: collapse; margin: 24px 0;
+            font-size: 15px;
+        }
+        table.cost th, table.cost td {
+            text-align: left; padding: 10px 12px;
+            border-bottom: 1px solid var(--line);
+        }
+        table.cost th { color: var(--muted); font-weight: normal; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+        table.cost td:nth-child(2) { color: var(--amber); white-space: nowrap; }
+        table.cost tr.him td { color: #fff; background: rgba(51,255,102,.05); }
+        table.cost tr.him td:first-child { color: var(--green); }
+
+        /* ================= RUN CARDS ================= */
+        .phase { margin: 34px 0 10px; }
+        .phase h3 {
+            font-weight: normal; color: var(--amber); font-size: 14px;
+            letter-spacing: .18em; text-transform: uppercase; margin: 0 0 4px;
+        }
+        .phase .phase-note { color: var(--muted); font-size: 14px; margin: 0 0 14px; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+        .card {
+            background: var(--panel); border: 1px solid var(--line);
+            border-radius: 4px; padding: 16px 16px 14px;
+            display: flex; flex-direction: column; gap: 8px;
+            transition: border-color .15s;
+        }
+        .card:hover { border-color: var(--green-dim); }
+        .card .title { display: flex; align-items: baseline; gap: 8px; }
+        .card .title b { color: #fff; font-weight: 600; font-size: 16px; }
+        .card .title span { color: var(--muted); font-size: 12.5px; }
+        .card p { margin: 0; font-size: 13.5px; color: var(--text); flex: 1; }
+        .card .hint { font-size: 12px; color: var(--muted); }
+        .card .hint code { color: var(--cyan); font-size: 11.5px; }
+        .card button {
+            align-self: flex-start;
+            background: transparent; color: var(--green);
+            border: 1px solid var(--green-dim); border-radius: 3px;
+            padding: 7px 18px; font-size: 13px; cursor: pointer;
+            font-family: inherit; letter-spacing: .1em;
+        }
+        .card button:hover { background: var(--green); color: #04140a; text-shadow: none; }
+
+        /* ================= FOOTER ================= */
+        .footer {
+            margin-top: 70px; border-top: 1px solid var(--line);
+            padding: 34px 20px 44px; text-align: center;
+            color: var(--muted); font-size: 13.5px;
+        }
+        .footer a { color: var(--cyan); text-decoration: none; }
+        .footer .sig { margin-top: 14px; color: var(--green-dim); }
+
+        /* ================= FINDINGS GRID ================= */
+        .findings { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 28px 0 16px; }
+        .finding { display: flex; gap: 16px; align-items: flex-start; }
+        .finding .fnum {
+            flex: none; min-width: 62px; text-align: center;
+            font-size: 26px; color: var(--amber);
+            border: 1px solid var(--line); border-radius: 4px;
+            padding: 12px 6px; background: rgba(255,176,0,.04);
+        }
+        .finding h4 { margin: 2px 0 5px; color: #fff; font-size: 16px; font-weight: 600; }
+        .finding p { margin: 0; font-size: 14.5px; color: var(--text); }
+        .finding strong { color: var(--green); font-weight: 600; }
+        @media (max-width: 680px) { .findings { grid-template-columns: 1fr; } }
+
+        /* ================= LIVE EMBED ================= */
+        .live { border: 1px solid var(--green-dim); border-radius: 5px; overflow: hidden; margin: 26px 0; background: #05070b; }
+        .live-head, .live-foot {
+            display: flex; justify-content: space-between; align-items: center; gap: 12px;
+            padding: 9px 14px; background: var(--panel); font-size: 12.5px; color: var(--green);
+        }
+        .live-foot { border-top: 1px solid var(--line); color: var(--muted); min-height: 40px; }
+        .live-head .live-hint { color: var(--muted); }
+        .live-head .live-hint b { color: var(--cyan); }
+        .live-foot button {
+            background: transparent; color: var(--cyan); border: 1px solid var(--cyan);
+            border-radius: 3px; padding: 5px 14px; font-size: 12px; cursor: pointer; font-family: inherit;
+        }
+        .live-foot button:hover { background: var(--cyan); color: #04140a; }
+        /* The DOS text screen is ~1.8:1 (720×400, 640×344) — not 4:3. Match its
+           real shape so the frame hugs the picture instead of boxing it too tall. */
+        .live-stage {
+            position: relative; aspect-ratio: 9 / 5; background: #000; width: 100%;
+        }
+        #dos-inline { width: 100%; height: 100%; }
+        #dos-inline canvas { image-rendering: pixelated; }
+        /* loading veil — these VBDOS apps spend 20–40s loading their runtime, screen
+           libraries, and data files after the emulator is up, painting nothing. Cover
+           that gap so a slow boot doesn't read as a white-screen crash. */
+        .live-loading {
+            position: absolute; inset: 0; z-index: 5; display: none;
+            flex-direction: column; align-items: center; justify-content: center; gap: 15px;
+            background: #05070b; text-align: center; padding: 0 26px;
+            font-family: ui-monospace, monospace; color: var(--muted);
+        }
+        .live-loading.show { display: flex; }
+        .live-loading .spin {
+            width: 30px; height: 30px; border: 3px solid var(--line);
+            border-top-color: var(--green); border-radius: 50%;
+            animation: spin .9s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .live-loading b { color: var(--green); font-weight: 600; }
+        .live-loading small { color: #5a6474; font-size: 12px; max-width: 360px; line-height: 1.5; }
+        /* cover = an actual screenshot of the program, dimmed, with run choices over it */
+        .live-cover { position: absolute; inset: 0; overflow: hidden; background: #000; }
+        .live-cover.hide { display: none; }
+        /* object-fit:fill stretches the raw framebuffer to the 4:3 stage, the same
+           aspect correction the live emulator applies, so nothing is clipped */
+        .cover-img {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            object-fit: fill; image-rendering: pixelated;
+        }
+        .cover-shade {
+            position: absolute; inset: 0; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 18px; text-align: center;
+            background: linear-gradient(rgba(5,7,11,.62), rgba(5,7,11,.78));
+        }
+        .cover-label { color: #cdd6e2; font-size: 13px; letter-spacing: .06em; }
+        .cover-btns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; padding: 0 12px; }
+        .cover-btns button {
+            background: var(--green); color: #04140a; border: none; border-radius: 4px;
+            padding: 12px 22px; font-size: 13.5px; letter-spacing: .06em; cursor: pointer;
+            font-family: ui-monospace, monospace; font-weight: bold;
+        }
+        .cover-btns button.alt { background: transparent; color: var(--green); border: 1px solid var(--green); }
+        .cover-btns button:hover { filter: brightness(1.12); }
+        .cover-btns button.alt:hover { background: rgba(51,255,102,.12); filter: none; }
+
+        /* printer panel sits full-width below the live stage and animates open
+           (height auto can't transition, so we grow max-height) when data lands */
+        .live .printer-panel {
+            width: 100%; display: flex; flex-direction: column;
+            max-height: 0; overflow: hidden; opacity: 0; border: 1px solid transparent;
+            transition: max-height .5s ease, opacity .35s ease, border-color .5s ease;
+        }
+        .live .printer-panel.show {
+            max-height: 560px; opacity: 1;
+            border-color: var(--line); border-top: none;
+        }
+        /* taller (more lines) and horizontally scrollable for 80–132 col reports */
+        .live .paper { max-height: 500px; overflow: auto; }
+
+        /* chips (secondary launchers) — even grid, every tile the same size */
+        .chips {
+            display: grid; gap: 10px; margin-top: 12px;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        }
+        .chip {
+            display: flex; flex-direction: column; justify-content: center; gap: 3px;
+            min-height: 64px; padding: 11px 14px;
+            background: var(--panel); color: var(--text);
+            border: 1px solid var(--line); border-radius: 6px;
+            cursor: pointer; font-family: inherit; font-size: 14px; font-weight: 600;
+            text-align: left; transition: border-color .12s, background .12s, transform .06s;
+        }
+        .chip span { color: var(--muted); font-size: 11.5px; font-weight: normal; }
+        .chip:hover { border-color: var(--green-dim); background: #0e141a; color: #fff; }
+        .chip:active { transform: translateY(1px); }
+
+        /* read-the-source list */
+        .readlist { max-width: 760px; padding-left: 20px; }
+        .readlist li { color: var(--text); font-size: 15px; margin: 8px 0; }
+        .readlist a { color: var(--cyan); text-decoration: none; }
+        .readlist a:hover { text-decoration: underline; }
+        .readlist code { color: var(--green-dim); font-size: 13px; }
+
+        /* ================= FEATURED SUPERSET ================= */
+        .featured {
+            border: 1px solid var(--green-dim); border-radius: 4px;
+            background: linear-gradient(180deg, rgba(51,255,102,.05), transparent 60%), var(--panel);
+            padding: 24px 26px; margin: 28px 0;
+        }
+        .featured .flag {
+            font-size: 11px; letter-spacing: .25em; color: var(--amber);
+            text-transform: uppercase;
+        }
+        .featured h3 { margin: 6px 0 10px; font-size: 22px; font-weight: normal; color: #fff; }
+        .featured p { font-size: 15px; margin: 0 0 10px; }
+        .featured .btns { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+        .featured button {
+            background: var(--green); color: #04140a; border: none; border-radius: 3px;
+            padding: 10px 22px; font-size: 14px; cursor: pointer; font-family: inherit;
+            letter-spacing: .08em;
+        }
+        .featured button.alt { background: transparent; color: var(--green); border: 1px solid var(--green-dim); }
+        .featured button:hover { filter: brightness(1.15); }
+
+        /* ================= PRINTER PANEL ================= */
+        .emulator-body { flex: 1; display: flex; min-height: 0; }
+        .printer-panel {
+            width: min(420px, 45vw); display: none; flex-direction: column;
+            border-left: 1px solid var(--line); background: #14161a;
+        }
+        .printer-panel.show { display: flex; }
+        .printer-head {
+            display: flex; align-items: center; gap: 10px;
+            padding: 8px 12px; border-bottom: 1px solid var(--line);
+            color: var(--muted); font-size: 12px; letter-spacing: .15em;
+        }
+        .printer-head button {
+            margin-left: auto; background: transparent; color: var(--muted);
+            border: 1px solid var(--line); border-radius: 3px; padding: 3px 10px;
+            font-size: 11px; cursor: pointer; font-family: inherit;
+        }
+        .printer-head button:hover { color: var(--amber); border-color: var(--amber); }
+        /* dark scroll viewport; the paper itself lives inside and scrolls */
+        .paper { flex: 1; overflow-y: auto; background: #0c0e12; }
+        .paper-sheet {
+            position: relative; min-height: 100%; padding: 14px 34px;
+            /* green-bar continuous stock — grows with the print, scrolls with it */
+            background:
+                repeating-linear-gradient(to bottom,
+                    #eef3ea 0px, #eef3ea 42px,
+                    #cfe3cd 42px, #cfe3cd 84px);
+        }
+        /* tractor-feed hole strips — span the full sheet, scroll with content */
+        .paper-sheet::before, .paper-sheet::after {
+            content: ""; position: absolute; top: 0; bottom: 0; width: 22px;
+            background:
+                repeating-radial-gradient(circle at 11px 14px,
+                    #14161a 0 3.5px, transparent 4.5px, transparent 100%) ,
+                #e4e9e0;
+            background-size: 22px 28px;
+        }
+        .paper-sheet::before { left: 0; border-right: 1px dashed #b9c4b4; }
+        .paper-sheet::after  { right: 0; border-left: 1px dashed #b9c4b4; }
+        .paper pre {
+            margin: 0; white-space: pre;   /* fixed columns — no wrapping */
+            color: #2a2d3a; font-size: 11px; line-height: 14px;
+            letter-spacing: .3px;
+            text-shadow: 0 0 .6px rgba(42,45,58,.7); /* dot-matrix ink bleed */
+        }
+        .paper .formfeed {
+            border-top: 1px dashed #8a958a; margin: 12px -14px;
+            text-align: center; color: #8a958a; font-size: 10px;
+            font-family: ui-monospace, monospace; letter-spacing: .3em;
+        }
+        .paper .idle {
+            color: #7a857a; font-size: 12px; font-family: ui-monospace, monospace;
+            text-align: center; margin-top: 30px;
+        }
+        .badge {
+            display: none; background: var(--amber); color: #201500;
+            border-radius: 8px; font-size: 10px; padding: 1px 7px;
+            margin-left: 6px; vertical-align: middle;
+        }
+        .badge.show { display: inline-block; }
+
+        .emulator-body { display: none; }  /* modal retired — single inline surface */
+
+        @media (max-width: 640px) {
+            .timeline::before { left: 8px; }
+            .tl-row { padding-left: 34px; }
+            .tl-row .year { position: static; text-align: left; width: auto; display: block; margin-bottom: 2px; }
+            .tl-row::before { left: 3px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <div class="boot mono">C:\&gt; ver&nbsp;&nbsp;·&nbsp;&nbsp;MS-DOS 6.22&nbsp;&nbsp;·&nbsp;&nbsp;Microsoft Visual Basic for MS-DOS 1.00<br>C:\&gt; run legacy_</div>
+        <h1 class="mono">Custom ERPs for 5 industries.<br>
+        BASIC on a microcomputer.<br>
+        One developer. No mainframe.<span class="cursor"></span></h1>
+        <p class="sub">Nine systems, built and maintained across eighteen years (1988 to 2006) and run in
+        production by real companies. <em>Preserved, anonymized, and running in your browser.</em></p>
+        <div class="statband mono">
+            <div class="stat"><b>~46,000</b><span>curated app lines</span></div>
+            <div class="stat"><b>9</b><span>preserved systems</span></div>
+            <div class="stat"><b>5</b><span>industries</span></div>
+            <div class="stat"><b>3,949</b><span>populated customer records</span></div>
+            <div class="stat"><b>18</b><span>year evidence span</span></div>
+        </div>
+    </div>
+
+    <div class="wrap">
+
+        <!-- ============ RUN IT (interactive, up top) ============ -->
+        <section>
+            <h2>Run It Yourself</h2>
+            <p class="lede">His software, running live over synthetic data, dropped straight at its main menu.
+            Start with <strong>FOG</strong>, the rent-to-own home-furnishings system: it runs its own general
+            ledger, payables, payroll, and statements alongside the rent-to-own business, so it is the whole
+            accounting engine and a full vertical application at once. Run the rent-to-own side or the accounting side.</p>
+
+            <div class="live">
+                <div class="live-head mono">
+                    <span id="live-note">◈ Live in your browser</span>
+                    <span class="live-hint">arrows &amp; Enter navigate · Esc backs out</span>
+                </div>
+                <div class="live-stage">
+                    <div id="dos-inline"></div>
+                    <div class="live-loading" id="live-loading">
+                        <div class="spin"></div>
+                        <div>Booting <b id="loading-app">…</b></div>
+                        <small>Loading the DOS runtime, screen libraries, and data files — usually a few seconds.</small>
+                    </div>
+                    <div class="live-cover" id="live-cover">
+                        <img class="cover-img" src="img/fog_cover.png" alt="FOG rent-to-own system screen">
+                        <div class="cover-shade">
+                            <div class="cover-label">The actual 1990s program, running on your machine</div>
+                            <div class="cover-btns">
+                                <button onclick="runInBrowser('FOG · Rent-to-Own', 'fog')">▶ &nbsp;RUN THE RENT-TO-OWN SYSTEM</button>
+                                <button class="alt" onclick="runInBrowser('FOG · Accounting engine', 'fog_ac')">▶ &nbsp;RUN THE ACCOUNTING ENGINE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="live-foot mono">
+                    <button id="printer-toggle" onclick="togglePrinter()" style="display:none;">▤ PRINTER<span class="badge" id="printer-badge">NEW</span></button>
+                </div>
+                <div class="printer-panel" id="printer-panel">
+                    <div class="printer-head mono">
+                        ◼ EPSON FX-80 · LPT1 · CONTINUOUS FEED
+                        <button onclick="tearOff()">TEAR OFF</button>
+                    </div>
+                    <div class="paper" id="paper">
+                        <div class="paper-sheet" id="paper-sheet">
+                            <div class="idle" id="paper-idle">· printer idle ·<br><br>reports the app prints to LPT1 scroll here</div>
+                            <pre id="paper-text"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="note" style="margin-top:22px;">The rest of the collection boots right here too:</p>
+            <div class="chips">
+                <button class="chip" onclick="runInBrowser('FOG · Accounting (the MPC engine, evolved)', 'fog_ac')">FOG Accounting <span>the superset engine</span></button>
+                <button class="chip" onclick="runInBrowser('FOG · Rent-to-Own Office (RTS)', 'fog_office')">FOG Office <span>rent-to-own back office (ISAM)</span></button>
+                <button class="chip" onclick="runInBrowser('MPC · McKenry Produce Company', 'mpc')">MPC <span>poultry wholesaler</span></button>
+                <button class="chip" onclick="runInBrowser('MPC · Receivables (ARP)', 'mpc_ar')">MPC · AR <span>6-module receivables</span></button>
+                <button class="chip" onclick="runInBrowser('PFC · Processed Foods Corporation', 'pfc')">PFC <span>food manufacturer</span></button>
+                <button class="chip" onclick="runInBrowser('RDL · Rogers Dental Laboratory', 'rdl')">RDL <span>dental lab billing</span></button>
+                <!-- The payroll-bureau client installs (BAJ, HBS, IMM) and MCS are kept off the
+                     launcher: they were real people's/companies' payrolls, and the reuse story is
+                     told in the write-up instead of exposing individual clients. MCS also ships only
+                     source (no compiled EXE). CNB (a bank ACH converter utility) is likewise off. -->
+                <button class="chip" onclick="runInBrowser('Visual Basic for MS-DOS', 'vbasic')">VB-DOS IDE <span>his workbench</span></button>
+                <button class="chip" onclick="runInBrowser('NOVA Screen Editor', 'nova')">NOVA <span>screen editor</span></button>
+            </div>
+        </section>
+
+        <!-- ============ THE STORY ============ -->
+        <section>
+            <h2>The 1988 Landscape</h2>
+            <p class="lede">Software this comprehensive ran on mainframes and minicomputers. A single
+            system covering general ledger, receivables, payables, inventory, and payroll implied a
+            hardware budget in the tens or hundreds of thousands of dollars and a team to install and
+            maintain it. Writing that capability in BASIC, for a PC, sat outside what the industry
+            treated as feasible.</p>
+            <p class="lede">Each system reached past bookkeeping into the specifics of its business.
+            The one written for a food manufacturer carried recipe and formula management with job costing,
+            tracing raw materials through production runs and assigning cost to each batch. The
+            rent-to-own home-furnishings system modeled rental-purchase agreements, depreciation, and
+            serial-numbered inventory that moved between stores. The dental-lab system billed against a catalog
+            of procedures. A poultry wholesaler's receivables and a payroll bureau's quarterly filings were
+            handled the same way: a domain model built for the work, sitting on one shared, integrated general ledger.</p>
+        </section>
+
+        <!-- ============ COST TABLE ============ -->
+        <section>
+            <h2>The Competition, circa 1990</h2>
+            <table class="cost">
+                <tr><th>System</th><th>Cost</th><th>Team</th><th>Support model</th></tr>
+                <tr><td>SAP R/2 (mainframe)</td><td>$500K – $2M+</td><td>20–50 people</td><td>Consulting firm</td></tr>
+                <tr><td>Peachtree (PC, market leader)</td><td>$2,000 – $5,000</td><td>Self-install</td><td>Phone</td></tr>
+                <tr><td>Accpac (PC, per module)</td><td>$495 – $5,000</td><td>Reseller channel</td><td>Phone</td></tr>
+                <tr><td>QuickBooks (PC, from 1992)</td><td>$99</td><td>—</td><td>Not an ERP</td></tr>
+                <tr class="him"><td>MCS</td><td>&lt; $50K, all-in</td><td>1 person</td><td>He answered the phone</td></tr>
+            </table>
+            <p class="note">The modules SAP R/3 would ship in 1992 (GL, AR, AP, inventory, payroll) were already
+            running here on a microcomputer, custom-fit to each business.</p>
+        </section>
+
+        <!-- ============ TIMELINE ============ -->
+        <section>
+            <h2>Two Timelines</h2>
+            <p class="note">What he shipped, against what the industry shipped.</p>
+            <div class="timeline">
+                <div class="tl-row">
+                    <div class="year mono">1988</div>
+                    <h3>PFC, a 12-module ERP, begins</h3>
+                    <p>Food manufacturing, with GL, AP, AR, financial statements, payroll, inventory, order
+                    entry, and time sheets, plus job costing and recipe management. Written in QuickBASIC 4.5.</p>
+                    <div class="vs"><b>Industry:</b> Oracle Financials launches at mainframe prices. dBASE IV ships. SAP is R/2, mainframe only.</div>
+                </div>
+                <div class="tl-row">
+                    <div class="year mono">1990</div>
+                    <h3>MPC goes live at McKenry Produce Company</h3>
+                    <p>Full accounting for a Knoxville poultry business — "Produce Company" in the old
+                    egg-and-poultry sense, not fruit and vegetables: preserved masters with 410 populated
+                    customer records and 51 populated employee records,
+                    and the most mature receivables he ever wrote, split across six dedicated sub-modules. It
+                    ran daily until 2001.</p>
+                </div>
+                <div class="tl-row">
+                    <div class="year mono">1991</div>
+                    <h3>Payroll becomes a product, and a service</h3>
+                    <p>The 2,000-line payroll engine is extracted and shipped as a standalone product — the
+                    same codebase configured for one bookkeeping and payroll client after another, each with
+                    its own menu and setup. He also runs it as a <strong>payroll service bureau</strong>,
+                    processing other companies' payrolls himself, pay period after pay period, for years.</p>
+                    <div class="vs"><b>Industry:</b> The xBase/Clipper world peaks. Clipper sells to Computer Associates for <b>$190 million</b> in 1992.</div>
+                </div>
+                <div class="tl-row">
+                    <div class="year mono">1992</div>
+                    <h3>The platform catches up</h3>
+                    <p>Microsoft releases Visual Basic for MS-DOS in September, and later projects migrate to
+                    it, the same compiler family he had bet on four years earlier.</p>
+                    <div class="vs"><b>Industry:</b> SAP R/3 launches in July (implementations: $500K to $2M).
+                    QuickBooks launches at $99, with GL and basic AR/AP but no inventory or job costing.</div>
+                </div>
+                <div class="tl-row">
+                    <div class="year mono">1995</div>
+                    <h3>New verticals: FOG and RDL</h3>
+                    <p>A rent-to-own home-furnishings system with multi-store support, rental-purchase
+                    agreements, depreciation, and 3,479 populated customer records, then a dental-lab billing
+                    system for <strong>Rogers' Dental Laboratory</strong> of Athens, Tennessee, with a
+                    120-record procedure catalog and 11,638 invoice records.
+                    The rent-to-own system carries his whole accounting engine inside it; its books are a
+                    family store in Greeneville, Tennessee, supported remotely by modem over the years.</p>
+                    <div class="vs"><b>Industry:</b> Windows 95 ships. Great Plains and Accpac fight for the PC mid-market. "SaaS" does not exist.</div>
+                </div>
+                <div class="tl-row">
+                    <div class="year mono">2006</div>
+                    <h3>Still running, still maintained</h3>
+                    <p>The software keeps working long after DOS itself is history, with accounting modules
+                    recompiled as late as 2005 and rent-to-own books posting entries into 2006. From the first line
+                    in 1988, the surviving evidence spans <strong>eighteen years</strong>. The files alone do
+                    not prove uninterrupted production use throughout that span.</p>
+                </div>
+                <div class="tl-row world">
+                    <div class="year mono">today</div>
+                    <h3>Preserved and running</h3>
+                    <p>Historical source and executables are preserved alongside derived demo data and
+                    portability fixes. Structured identity fields in the browser bundles are scrubbed and
+                    audited; unresolved formats and real-data backups remain outside those bundles.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ WHAT WAS UNUSUAL ============ -->
+        <section>
+            <h2>What Was Unusual in the Code</h2>
+            <p class="lede">These are not thin front-ends over a database. Where a commercial developer would
+            reach for a toolkit or a team, one person built the layers underneath, and did it well enough that
+            the systems ran for years.</p>
+
+            <p><strong>One codebase behind many systems.</strong> The payroll module, roughly 2,000 lines
+            handling employees, checks, federal tax withholding, and W-2s, runs nearly unchanged inside six of
+            the nine systems. The accounting core was reused the same way. He wrote the hard part once and
+            carried it forward for eighteen years.</p>
+
+            <p><strong>Receivables broken into six programs.</strong> In MPC, the poultry wholesaler's system,
+            accounts receivable is not one module but six specialized programs for entry, sales, detail, history, reporting, and setup.
+            Commercial packages shipped AR as a single module; he saw six distinct workflows and built each.</p>
+
+            <p><strong>Its own indexed database, in application code.</strong> Records are fixed-length binary
+            structures in indexed files, with separate name and key indexes and record locking for shared
+            access. It held over 11,000 invoices and thousands of customers per system with no database product
+            underneath, just his code managing the indexes.</p>
+
+            <p><strong>Its own login.</strong> The rent-to-own system authenticates by transforming each typed
+            character, binary-searching a sorted password file for the result, and checking a per-user
+            permission level before every sensitive action. Small, homemade, and real.</p>
+
+            <p><strong>Screens painted straight to video memory.</strong> Precompiled screen layouts are loaded
+            directly into the display's memory rather than drawn field by field, so a full form appears at once.
+            On a 1990 PC it made a text interface feel instant.</p>
+
+            <div class="diagram">
+<pre class="mermaid">
+flowchart TD
+    PR["<b>One payroll engine</b><br/><small>~2,000 lines · employees · checks<br/>FIT · FICA · Medicare · W-2s</small>"]:::hub
+    PR --> MPC["MPC<br/><small>poultry wholesaler</small>"]:::sys
+    PR --> PFC["PFC<br/><small>food manufacturer</small>"]:::sys
+    PR --> FOG["FOG<br/><small>rent-to-own</small>"]:::sys
+    PR --> BUR["payroll bureau<br/><small>client installs,<br/>configured per company</small>"]:::sys
+
+    classDef hub fill:#241a0e,stroke:#ffb000,color:#ffe8bf;
+    classDef sys fill:#16261c,stroke:#1d9e44,color:#d6e6da;
+</pre>
+            </div>
+            <p class="caption">The same payroll code runs in system after system. The accounting core was reused
+            the same way, carried out of the poultry company's books (MPC) and embedded whole inside the
+            rent-to-own system (FOG), which is why FOG is the largest and most complete of the nine.</p>
+        </section>
+
+        <!-- ============ READ THE SOURCE ============ -->
+        <section>
+            <h2>Read the Source</h2>
+            <p class="lede">Running the software is one thing; the code is the other. All ~46,000 lines of BASIC
+            are on GitHub to read, unmodified except for documented portability fixes. A few worth opening:</p>
+            <ul class="readlist">
+                <li><a href="https://github.com/mdayah/MCS/blob/master/MPC/SYSTEM/PR.BAS">MPC's payroll module</a> (<code>PR.BAS</code>): the ~2,000-line engine that runs, nearly unchanged, in six systems.</li>
+                <li><a href="https://github.com/mdayah/MCS/tree/master/MPC/SYSTEM">MPC's receivables</a> (<code>ARP/ARS/ARD/ART/ARR/ARI.BAS</code>): accounts receivable split into six programs.</li>
+                <li><a href="https://github.com/mdayah/MCS/blob/master/FOG/SYSTEM/RTO.BAS">The rent-to-own login</a> (<code>RTO.BAS</code>): the character-transform password check and per-user permission levels.</li>
+                <li><a href="https://github.com/mdayah/MCS/tree/master/PFC/IN">PFC's recipes and job costing</a>: manufacturing logic on a 1988 PC.</li>
+            </ul>
+        </section>
+    </div>
+
+    <div class="footer">
+        <p>Customer, employee, and patient identities in the browser demos are deterministic synthetic data; the fixed-record layouts and business behavior are preserved.</p>
+        <p>Source, documentation, and historical analysis:
+        <a href="https://github.com/mdayah/MCS">github.com/mdayah/MCS</a></p>
+        <p class="sig mono">1988 – 2006 · written in BASIC · remembered in the browser</p>
+    </div>
+
+    <script>
+    // Wrapped in an IIFE so our short names (id, dos, ci) stay private — the js-dos
+    // bundle declares its own globals (ci among them), and a bare top-level `let ci`
+    // here would collide at parse time and kill the whole script. Only the three
+    // functions the inline onclick handlers call are exported to window, at the end.
+    (function () {
+        // Single embedded emulator surface (#dos-inline). FOG boots by default;
+        // the chips swap which bundle runs in the same surface. No modal.
+        const BUILD_VERSION = "dev";   // CI replaces "dev" with the commit SHA at deploy
+        const id = (id) => document.getElementById(id);
+        let dos = null;                   // js-dos instance (its props: stop, setFullScreen…)
+        let ci = null;                    // js-dos CommandInterface, once ci-ready fires
+        let printerPoll = null;
+        let readyPoll = null;
+        const printerFiles = {};          // capture-file path -> bytes rendered
+
+        // Bundles with a password gate we auto-fill (plaintext typed once the
+        // login prompt appears; see set_demo_logins.py). FOG now runs the
+        // login-free RTODEMO build, so nothing needs auto-login — the machinery
+        // stays for any future gated app. If you point FOG back at the authentic
+        // RTO.EXE, restore { fog: "demo" } here.
+        const AUTOLOGIN = {};
+
+        // js-dos keyCodes are ASCII-uppercase based; digits are their ASCII.
+        function keyForChar(ch) {
+            if (ch >= 'a' && ch <= 'z') return { code: 65 + ch.charCodeAt(0) - 97, shift: false };
+            if (ch >= 'A' && ch <= 'Z') return { code: 65 + ch.charCodeAt(0) - 65, shift: true };
+            if (ch >= '0' && ch <= '9') return { code: 48 + ch.charCodeAt(0) - 48, shift: false };
+            return null;
+        }
+        const KBD_RSHIFT = 344;
+        const wait = ms => new Promise(r => setTimeout(r, ms));
+
+        async function typeString(s) {
+            for (const ch of s) {
+                const k = keyForChar(ch);
+                if (!k || !ci) continue;
+                if (k.shift) { ci.sendKeyEvent(KBD_RSHIFT, true); await wait(45); }
+                ci.sendKeyEvent(k.code, true); await wait(55);
+                ci.sendKeyEvent(k.code, false); await wait(45);
+                if (k.shift) { ci.sendKeyEvent(KBD_RSHIFT, false); }
+                await wait(110);
+            }
+        }
+
+        // The bundle autoexec writes C:\READY.RDY right before launching the
+        // app. Poll for it, then the keystrokes buffer in the BIOS type-ahead
+        // buffer until the app's login routine reads them.
+        function hasReady(node, path) {
+            const name = node.name || "";
+            const here = path ? path + "/" + name : name;
+            if (!node.nodes) return /ready\.rdy$/i.test(name);
+            return node.nodes.some(c => hasReady(c, here));
+        }
+
+        function hideVeil() {
+            if (readyPoll) { clearInterval(readyPoll); readyPoll = null; }
+            id('live-loading').classList.remove('show');
+        }
+
+        // On ci-ready the worker is up but the app hasn't painted — the autoexec is
+        // still loading it and finally writes C:\READY.RDY. Poll for that, then lift the
+        // veil (and, for gated apps, type the demo password into the type-ahead buffer).
+        // A failsafe timer lifts it regardless so it can never stick.
+        function watchStartup(bundleName) {
+            let done = false;
+            readyPoll = setInterval(async () => {
+                if (done || !ci) return;
+                try {
+                    const tree = await ci.fsTree();
+                    if (!hasReady(tree, "")) return;
+                    done = true;
+                    clearInterval(readyPoll); readyPoll = null;
+                    await wait(1400);               // let the first app screen paint
+                    id('live-loading').classList.remove('show');
+                    const pw = AUTOLOGIN[bundleName];
+                    if (pw) { await typeString(pw); id('live-note').textContent += '  ·  signed in automatically'; }
+                } catch (e) { /* fs not ready yet — keep polling */ }
+            }, 800);
+            setTimeout(hideVeil, 75000);
+        }
+
+        // Each launch mounts into a FRESH child of #dos-inline. js-dos v8 renders a
+        // React root into whatever node it's handed and never unmounts it; handing the
+        // next app the same node makes React reconcile against the dead tree and white-
+        // screen. A new node sidesteps that, and disposeEmulator() drops the old one
+        // after awaiting the previous worker's exit — so only one emulator runs at a time.
+        let launch = 0;
+        async function runInBrowser(appName, bundleName) {
+            const token = ++launch;
+            // Raise the veil BEFORE tearing down the previous app. stop() is async and the
+            // old canvas blanks to white while it unwinds; if the veil goes up only after
+            // that await, the teardown gap shows as a dead white screen until a second click.
+            id('live-cover').classList.add('hide');
+            id('live-note').textContent = appName;
+            id('loading-app').textContent = appName;
+            id('live-loading').classList.add('show');
+
+            await disposeEmulator();
+            if (token !== launch) return;   // a newer click already took over
+
+            id('printer-toggle').style.display = 'inline-block';
+            const mount = document.createElement('div');
+            mount.style.cssText = 'width:100%;height:100%';
+            id('dos-inline').replaceChildren(mount);
+            fitTouchStage();
+            tearOff();
+            document.querySelector('.live').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // js-dos keys its IndexedDB bundle cache on the URL; BUILD_VERSION (the deploy
+            // SHA) re-fetches a rebuilt bundle but keeps unchanged ones cached across visits.
+            dos = Dos(mount, {
+                url: `bundles/${bundleName}.jsdos?v=${BUILD_VERSION}`,
+                pathPrefix: "https://v8.js-dos.com/latest/emulators/",
+                backend: "dosboxX",          // the core these apps are verified to run under
+                autoStart: true,
+                renderAspect: "Fit",         // fill the frame; the stage already matches DOS shape
+                imageRendering: "pixelated",
+                softKeyboard: true,          // on-screen Esc/arrows/F-keys for touch
+                mouseCapture: false,
+                onEvent: (event, arg) => {
+                    if (event === "ci-ready") {
+                        ci = arg;
+                        printerPoll = setInterval(pollPrinter, 2000);
+                        watchStartup(bundleName);
+                    } else if (event === "emu-error" || event === "bnd-error") {
+                        hideVeil();   // let js-dos surface its own error instead of a veil
+                        id('live-note').textContent = appName + '  ·  failed to load — try again';
+                    }
+                }
+            });
+        }
+
+        // On touch, the js-dos on-screen keyboard is an absolute overlay pinned to the
+        // bottom of the emulator. If the stage keeps its fixed ratio the keyboard covers
+        // the screen, so we drop the ratio and set the height to a full-width DOS screen
+        // (~5/9 of its width) plus the keyboard, keeping the picture full width above the keys.
+        const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
+        const SOFT_KB_PX = 232;   // 5 rows × 40px + gaps/padding, from js-dos.css
+        function fitTouchStage() {
+            if (!IS_TOUCH) return;
+            const stage = document.querySelector('.live-stage');
+            stage.style.aspectRatio = 'auto';
+            stage.style.height = Math.round(stage.clientWidth * 5 / 9 + SOFT_KB_PX) + 'px';
+        }
+        window.addEventListener('resize', fitTouchStage);
+
+        /* ---------- printer capture ----------
+           dosbox.conf routes LPT1-3 each to their own append file
+           (LPT1.TXT..LPT3.TXT) in the emulator's in-memory FS. We scan for
+           them via fsTree() and stream any new bytes onto the paper. */
+
+        function findPrinterFiles(node, path, acc) {
+            const name = node.name || "";
+            const here = path ? path + "/" + name : name;
+            if (!node.nodes) {
+                if (/^lpt[123]\.txt$/i.test(name) || /printer\.txt$/i.test(name) || /\.prt$/i.test(name))
+                    acc.push(here);
+                return;
+            }
+            for (const child of node.nodes) findPrinterFiles(child, here, acc);
+        }
+
+        let printerRaw = [];   // all captured bytes (across LPT files), in arrival order
+
+        async function pollPrinter() {
+            if (!ci) return;
+            try {
+                const found = [];
+                const tree = await ci.fsTree();
+                findPrinterFiles(tree, "", found);
+                let grew = false;
+                for (const p of found) {
+                    const seen = printerFiles[p] || 0;
+                    const bytes = await ci.fsReadFile(p);
+                    if (!bytes || bytes.length <= seen) continue;
+                    for (let i = seen; i < bytes.length; i++) printerRaw.push(bytes[i]);
+                    printerFiles[p] = bytes.length;
+                    grew = true;
+                }
+                if (grew) renderPaper();
+            } catch (e) { /* files may not exist yet — keep polling */ }
+        }
+
+        // Epson ESC/P control codes his reports emit (ESC @, ESC M, ESC ! n,
+        // ESC C n, SO/SI/DC2 …). Strip them so the paper shows clean text
+        // instead of "@M" artifacts. Escape commands that carry a numeric
+        // argument consume the following byte; the rest are zero-arg.
+        const ESC_ONE_ARG = new Set("!CJAQlRSUprwW3-akxt".split("").map(c => c.charCodeAt(0)));
+        function stripEscP(bytes) {
+            let out = "";
+            for (let i = 0; i < bytes.length; i++) {
+                const b = bytes[i];
+                if (b === 27) {                 // ESC
+                    const cmd = bytes[++i];
+                    if (ESC_ONE_ARG.has(cmd)) i++;   // also drop its argument byte
+                    continue;
+                }
+                if (b === 14 || b === 15 || b === 18 || b === 17 ||
+                    b === 19 || b === 20) continue;  // SO/SI/DC2/DC1/DC3 toggles
+                if (b === 13) continue;         // CR — LF handles line breaks
+                out += String.fromCharCode(b);
+            }
+            return out;
+        }
+
+        function renderPaper() {
+            const paper = id('paper');
+            const sheet = id('paper-sheet');
+            const text = stripEscP(printerRaw);
+            if (text.replace(/[\s\f]/g, "") === "") return;   // nothing printable yet
+
+            // rebuild the sheet: idle notice gone, one <pre> per form-fed page
+            sheet.innerHTML = "";
+            const pages = text.split("\f");
+            pages.forEach((chunk, i) => {
+                if (i > 0) {
+                    const ff = document.createElement('div');
+                    ff.className = 'formfeed';
+                    ff.textContent = '· · · form feed · · ·';
+                    sheet.appendChild(ff);
+                }
+                const pre = document.createElement('pre');
+                if (i === pages.length - 1) pre.id = 'paper-text';
+                pre.textContent = chunk;
+                sheet.appendChild(pre);
+            });
+            paper.scrollTop = paper.scrollHeight;
+
+            // pop the printer open automatically the first time real output lands
+            const panel = id('printer-panel');
+            if (!panel.classList.contains('show')) {
+                panel.classList.add('show');
+                id('printer-badge').classList.remove('show');
+                setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 260);
+            }
+        }
+
+        function togglePrinter() {
+            id('printer-panel').classList.toggle('show');
+            id('printer-badge').classList.remove('show');
+        }
+
+        function tearOff() {
+            printerRaw = [];
+            id('paper-sheet').innerHTML =
+                '<div class="idle" id="paper-idle">· printer idle ·<br><br>reports the app prints to LPT1 scroll here</div><pre id="paper-text"></pre>';
+        }
+
+        async function disposeEmulator() {
+            if (printerPoll) { clearInterval(printerPoll); printerPoll = null; }
+            if (readyPoll) { clearInterval(readyPoll); readyPoll = null; }
+            ci = null;
+            for (const k in printerFiles) delete printerFiles[k];
+            printerRaw = [];
+            id('printer-panel').classList.remove('show');
+            id('printer-badge').classList.remove('show');
+            if (dos) {
+                const inst = dos;
+                dos = null;
+                await inst.stop();                  // async in v8: ends the emulator worker
+                id('dos-inline').replaceChildren(); // drop the spent mount node
+            }
+        }
+
+        // Esc is NOT intercepted — the DOS apps use it to back out of menus.
+
+        // The inline onclick handlers in the markup call these three by name, so they
+        // need global scope; every other name above stays private inside the IIFE.
+        window.runInBrowser = runInBrowser;
+        window.togglePrinter = togglePrinter;
+        window.tearOff = tearOff;
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+name: Build bundles and deploy Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (with submodules)          # public repo: synthetic data only
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive                    # brings in VBASIC = VBDOS + PROISAM
+
+      - name: Safety — checkout carries no real data
+        run: |
+          set -e; fail=0
+          [ -e FOG/OFDATA ] && { echo "ERROR: OFDATA in checkout"; fail=1; }
+          git ls-files | grep -qiE '\.original$' && { echo "ERROR: .original tracked"; fail=1; }
+          [ "$fail" = 0 ] || { echo "Refusing to publish."; exit 1; }
+
+      # ---- Regenerate the office ISAM inventory from the PRIVATE real data ----
+      - name: Fetch real office inventory (private overlay, one file)
+        uses: actions/checkout@v4
+        with:
+          repository: mdayah/Private
+          ssh-key: ${{ secrets.PRIVATE_DEPLOY_KEY }}   # read-only deploy key
+          path: _private
+          sparse-checkout: FOG/OFDATA/INVENTOR.MAS
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with: { node-version: "20" }
+
+      - name: Install emulator + zip
+        run: npm i --no-save emulators jszip
+
+      - name: Scrub inventory ISAM in headless DOSBox-X (PROISAM), then drop the real copy
+        run: |
+          mkdir -p FOG/OFDATA
+          node scripts/isam_scrub.js _private/FOG/OFDATA/INVENTOR.MAS FOG/OFDATA/INVENTOR.MAS
+          rm -rf _private
+
+      - name: Safety — only a scrubbed INVENTOR.MAS exists in OFDATA
+        run: |
+          grep -qa "SYNTHETIC DEMO REMARK" FOG/OFDATA/INVENTOR.MAS \
+            || { echo "inventory not scrubbed"; exit 1; }
+          for f in CUSTOMER.MAS AGREEMNT.MAS RECEIPTS.MAS INVENTOR.CPY; do
+            [ -e "FOG/OFDATA/$f" ] && { echo "unexpected private file: $f"; exit 1; }
+          done
+          echo "ok: only scrubbed INVENTOR.MAS present in OFDATA"
+      # ------------------------------------------------------------------------
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+
+      - name: Build .jsdos bundles (incl. FOG office / RTS)
+        run: python3 web/create_bundles.py
+
+      - name: Stamp build version (commit SHA)
+        run: sed -i "s/const BUILD_VERSION = \"dev\";/const BUILD_VERSION = \"${GITHUB_SHA::7}\";/" web/index.html
+
+      - name: Upload Pages artifact (web/)
+        uses: actions/upload-pages-artifact@v3
+        with: { path: web }
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,3 @@
+
+# Real data kept beside each scrubbed file (generate_synthetic.py)
+*.original

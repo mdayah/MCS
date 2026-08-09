@@ -1,0 +1,33 @@
+# =============================================================================
+# PUBLIC REPO (MCS) — keep real PII and build artifacts out of git.
+# Real, unscrubbed data lives ONLY in the private overlay repo.
+# =============================================================================
+
+# --- Real customer/employee PII kept only in the private overlay ---
+FOG/OFDATA/
+# Original (real) data preserved beside each scrubbed file
+*.original
+# Full-tree backup of the real, pre-scrub archive
+_REAL_BACKUP/
+# Real company tax-ID markers used by the local PII gate
+scripts/real_markers.txt
+# First-generation hand-written schema (superseded by generate_schemas.py)
+scripts/schemas.json.bak
+
+# --- Build artifacts (bundles are built in CI, not committed) ---
+web/bundles/
+web/__pycache__/
+__pycache__/
+*.pyc
+
+# --- Local tooling / environments ---
+.venv/
+node_modules/
+package.json
+package-lock.json
+srv.log
+
+# --- OS / editor cruft ---
+.DS_Store
+Thumbs.db
+*.swp
